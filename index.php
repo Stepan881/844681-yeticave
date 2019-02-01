@@ -43,7 +43,6 @@ $article_list = [
         'url' => 'img/lot-6.jpg'
     ]
 ];
-
 ?>
 <!DOCTYPE html>
 <html lang="ru">
