@@ -2,6 +2,7 @@
 $is_auth = rand(0, 1);
 
 $user_name = 'Степан'; // укажите здесь ваше имя
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
