@@ -5,7 +5,7 @@ $user_name = 'Степан'; // укажите здесь ваше имя
 
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 
-$article_list = [
+$lots = [
     [
         'name' => '2014 Rossignol District Snowboard',
         'cate' => 'Доски и лыжи',
@@ -96,13 +96,11 @@ $article_list = [
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <!--заполните этот список из массива категорий-->
-            <?php $i = 0;
-            while ($i < count($categories)): ?>
+            <?php foreach ($categories as $category): ?>
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$categories[$i];?></a>
+                <a class="promo__link" href="pages/all-lots.html"><?=$category;?></a>
             </li>
-            <?php $i = $i + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
 
         </ul>
     </section>
@@ -112,18 +110,17 @@ $article_list = [
         </div>
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
-            <?php $i = 0;
-            while ($i < count($article_list)): ?>
+            <?php foreach ($lots as $lot): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$article_list[$i]['url'];?>" width="350" height="260" alt="">
+                    <img src="<?=$lot['url'];?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$article_list[$i]['cate'];?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$article_list[$i]['name'];?></a></h3>
+                    <span class="lot__category"><?=$lot['cate'];?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$lot['name'];?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <span class="lot__amount"><?=$article_list[$i]['price'];?></span>
+                            <span class="lot__amount"><?=$lot['price'];?></span>
                             <span class="lot__cost">цена<b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
@@ -132,8 +129,7 @@ $article_list = [
                     </div>
                 </div>
             </li>
-            <?php $i = $i + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
 </main>
@@ -143,13 +139,11 @@ $article_list = [
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <?php $i = 0;
-            while ($i < count($categories)): ?>
+            <?php foreach ($categories as $category):?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=$categories[$i];?></a>
+                <a href="pages/all-lots.html"><?=$category;?></a>
             </li>
-            <?php $i = $i + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
