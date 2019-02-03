@@ -44,6 +44,15 @@ $lots = [
     ]
 ];
 
+function format($number) {
+    $number = ceil($number);
+    if ($number >= 1000) {
+        print number_format($number);
+    } else {
+    print $number;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -121,7 +130,7 @@ $lots = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount"><?=$lot['price'];?></span>
-                            <span class="lot__cost">цена<b class="rub">р</b></span>
+                            <span class="lot__cost">цена <?php format(121010.22)?> <b class="rub">&#8399;</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
