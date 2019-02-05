@@ -47,7 +47,7 @@ $lots = [
 function format($number) {
     $number = ceil($number);
     if ($number >= 1000) {
-        return number_format($number,0, '', ' ') . ' &#8381;';
+        return number_format($number, 0, null, ' ') . ' &#8381;';
 
     } else {
     return $number . ' &#8381;';
