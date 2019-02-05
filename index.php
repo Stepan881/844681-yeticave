@@ -47,9 +47,9 @@ $lots = [
 function format($number) {
     $number = ceil($number);
     if ($number >= 1000) {
-        print number_format($number);
+        return number_format($number) . ' &#8381;';
     } else {
-    print $number;
+    return $number . ' &#8381;';
     }
 }
 
@@ -129,8 +129,8 @@ function format($number) {
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$lot['name'];?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <span class="lot__amount"><?=$lot['price'];?></span>
-                            <span class="lot__cost">цена <?php format(121010.22)?> <b class="rub">&#8399;</b></span>
+                            <span class="lot__amount">Стартовая цена</span>
+                            <span class="lot__cost"> <?=format($lot['price']);?> <!--b class="rub">р;</b--></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
