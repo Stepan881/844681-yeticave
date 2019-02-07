@@ -1,8 +1,13 @@
+/**
+ * @var string $title
+ * @var array $categories
+ * @var string $content
+ /*
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?php $title; ?></title>
+    <title><?= $title; ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -41,7 +46,7 @@
     </header>
 
     <main class="container">
-        <?=$content; ?>
+        <?= $content; ?>
     </main>
 </div>
 
