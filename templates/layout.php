@@ -1,8 +1,8 @@
-/**
+/*
  * @var string $title
  * @var array $categories
  * @var string $content
- /*
+ */
 <!DOCTYPE html>
 <html lang="ru">
 <head>
