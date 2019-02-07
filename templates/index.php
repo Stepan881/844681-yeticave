@@ -31,7 +31,7 @@
                             <span class="lot__cost"> <?=format($lot['price']);?> <!--b class="rub">р;</b--></span>
                         </div>
                         <div class="lot__timer timer">
-                            12:23
+                            <?= $time ;?>
                         </div>
                     </div>
                 </div>
