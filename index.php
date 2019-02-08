@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Europe/Moscow');
 require_once('functions.php');
 
 $is_auth = rand(0, 1);
@@ -43,23 +43,6 @@ $lots = [
         'image' => 'img/lot-6.jpg'
     ]
 ];
-function format($number) {
-    $number = ceil($number);
-    if ($number >= 1000) {
-        return number_format($number, 0, null, ' ') . ' &#8381;';
-    }
-    return $number . ' &#8381;';
-}
-
-function time_tomorrow() {
-    date_default_timezone_set('Europe/Moscow');
-    $ts_midnight = strtotime('tomorrow midnight');
-    $secs_to_midnight = $ts_midnight - time();
-    $hours = floor($secs_to_midnight / 3600);
-    $minutes = floor(($secs_to_midnight % 3600) / 60);
-    $result = sprintf( '%02d:%02d', $hours, $minutes) ;
-    return $result;
-}
 
 $content = include_template('index.php', [
     'categories' => $categories,
