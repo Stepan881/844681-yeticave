@@ -6,39 +6,42 @@ USE yeticave;
 
 CREATE TABLE `categories` (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name char(50)  NOT NULL UNIQUE
+  name VARCHAR(50)  NOT NULL UNIQUE
 );
 
 CREATE TABLE lots (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  data_add TIMESTAMP NOT NULL ,
-  name CHAR(50) NOT NULL UNIQUE,
+  create_time TIMESTAMP DEFAULT NOT NULL,
+  name VARCHAR(50) NOT NULL UNIQUE,
   description CHAR(255),
-  img CHAR NOT NULL,
-  start_price DECIMAL NOT NULL,
+  img VARCHAR(100) NOT NULL,
+  start_price INT NOT NULL,
   date_end TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  step CHAR,
-  autor_id INT,
+  step VARCHAR(100),
+  owner_id INT,
   winner_id INT,
   categories_id INT
+-- Создай обычные индексы для этих трёх полей, так как по ним будет идти выборка в будущем
+-- Что то я не на гуглил что за обычные индексы! VARCHAR???
 );
+
+
+
 
 CREATE TABLE bets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   data_add TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  sum_price DECIMAL,
-  autor_id INT,
+  amount INT,
+  owner_id INT,
   lots_id INT
 );
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  data_registr TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   email CHAR(50) NOT NULL UNIQUE,
-  name CHAR(50) NOT NULL UNIQUE,
+  name CHAR(50) NOT NULL,
   password CHAR(15) NOT NULL,
   avatar CHAR(70),
-  contacts CHAR(100),
-  create_lots_id INT,
-  bets_id INT
+  contacts CHAR(100)
 );
