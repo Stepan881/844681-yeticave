@@ -62,8 +62,8 @@ WHERE id = 1;
 -- получить список самых свежих ставок для лота по его идентификатору;
 SELECT amount, create_time, lot_id
 FROM bets
-ORDER BY create_time DESC;
-
+ORDER BY create_time DESC
+LIMIT 10;
 
 
 
