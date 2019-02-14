@@ -1,5 +1,5 @@
 -- Категории
-INSERT INTO сategory (name)
+INSERT INTO categories (name)
 VALUES
 ('Доски и лыжи'),
 ('Крепления'),
@@ -33,13 +33,13 @@ VALUES
 (11000, 3, 1);
 
 -- получить все категории;
-SELECT * FROM сategory;
+SELECT * FROM categories;
 
 -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;
-SELECT lots.name, lots.start_price, lots.img, MAX(bets.amount), сategory.name AS category_name
+SELECT lots.name, lots.start_price, lots.img, MAX(bets.amount), categories.name AS category_name
 FROM lots
-JOIN сategory
-ON lots.сategory_id = сategory.id
+JOIN categories
+ON lots.сategory_id = categories.id
 JOIN bets
 ON bets.lot_id = lots.id
 WHERE lots.winner_id = 1
@@ -47,10 +47,10 @@ GROUP BY bets.lot_id
 ORDER BY lots.end_time DESC;
 
 -- показать лот по его id. Получите также название категории, к которой принадлежит лот
-SELECT lots.name AS lot_name, сategory.name AS category_name
+SELECT lots.name AS lot_name, categories.name AS category_name
 FROM lots
-JOIN сategory
-ON lots.сategory_id = сategory.id
+JOIN categories
+ON lots.сategory_id = categories.id
 WHERE lots.id = 1;
 
 
