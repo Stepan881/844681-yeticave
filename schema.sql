@@ -4,7 +4,7 @@ DEFAULT COLLATE utf8_general_ci;
 
 USE yeticave;
 
-CREATE TABLE categories (
+CREATE TABLE сategory (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL UNIQUE
 );
@@ -20,12 +20,12 @@ CREATE TABLE lots (
   step INT NOT NULL,
   owner_id INT NOT NULL,
   winner_id INT,
-  categories_id INT NOT NULL
+  сategory_id INT NOT NULL
 );
 
 CREATE INDEX owner_id_idx ON lots(owner_id);
 CREATE INDEX winner_id_idx ON lots(winner_id);
-CREATE INDEX categories_id_idx ON lots(categories_id);
+CREATE INDEX сategory_id_idx ON lots(сategory_id);
 
 CREATE TABLE bets (
   id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,5 +1,5 @@
 -- Категории
-INSERT INTO categories (name)
+INSERT INTO сategory (name)
 VALUES
 ('Доски и лыжи'),
 ('Крепления'),
@@ -10,7 +10,7 @@ VALUES
 
 -- Лоты (описание имя фото начальнаяЦена шаг пользователь победитель сатегория)
 INSERT INTO lots
-(description, end_time, name, img, start_price, step, owner_id, winner_id, categories_id)
+(description, end_time, name, img, start_price, step, owner_id, winner_id, сategory_id)
 VALUES
 ('Доска Rossignol', '2019-05-05 00:00:01', '2014 Rossignol District Snowboard', 'img/lot-1.jpg', 10999, 1, 1, 1, 1),
 ('Доска Mens', '2019-05-05 00:00:01', 'DC Ply Mens 2016/2017 Snowboard', 'img/lot-2.jpg', 159999, 1, 1, 1, 1),
@@ -33,13 +33,13 @@ VALUES
 (11000, 3, 1);
 
 -- получить все категории;
-SELECT * FROM categories;
+SELECT * FROM сategory;
 
 -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;
-SELECT lots.name, lots.start_price, lots.img, MAX(bets.amount), categories.name
+SELECT lots.name, lots.start_price, lots.img, MAX(bets.amount), сategory.name AS category_name
 FROM lots
-JOIN categories
-ON lots.categories_id = categories.id
+JOIN сategory
+ON lots.сategory_id = сategory.id
 JOIN bets
 ON bets.lot_id = lots.id
 WHERE lots.winner_id = 1
@@ -47,11 +47,12 @@ GROUP BY bets.lot_id
 ORDER BY lots.end_time DESC;
 
 -- показать лот по его id. Получите также название категории, к которой принадлежит лот
-SELECT lots.name, categories.name AS category_name
+SELECT lots.name AS lot_name, сategory.name AS category_name
 FROM lots
-JOIN categories
-ON lots.id = categories.id
+JOIN сategory
+ON lots.сategory_id = сategory.id
 WHERE lots.id = 1;
+
 
 -- обновить название лота по его идентификатору;
 UPDATE lots
@@ -59,10 +60,10 @@ SET name = '2014 Rossignol District Snowboard'
 WHERE id = 1;
 
 -- получить список самых свежих ставок для лота по его идентификатору;
-SELECT bets.amount, bets.create_time, bets.lot_id
+SELECT amount, create_time, lot_id
 FROM bets
-WHERE bets.id = 1
-ORDER BY bets.create_time DESC;
+ORDER BY create_time DESC;
+
 
 
 
