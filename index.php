@@ -4,7 +4,9 @@ require_once('functions.php');
 
 $is_auth = rand(0, 1);
 $user_name = 'Степан'; // укажите здесь ваше имя1
+/*
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
+
 $lots = [
     [
         'name' => '2014 Rossignol District Snowboard',
@@ -43,6 +45,35 @@ $lots = [
         'image' => 'img/lot-6.jpg'
     ]
 ];
+*/
+$connect = mysqli_connect('localhost', 'root','','yeticave');
+
+if (!$connect) {
+    print('Ошибка подключение: ' . mysqli_connect_error());
+}
+
+mysqli_set_charset($connect, 'utf8');
+
+$cat = 'SELECT id, name FROM categories';
+$result = mysqli_query($connect, $cat);
+$categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+$cat = '
+SELECT lots.name, lots.start_price, lots.img, MAX(bets.amount), categories.name AS category_name
+FROM lots
+JOIN categories
+ON lots.сategory_id = categories.id
+JOIN bets
+ON bets.lot_id = lots.id
+WHERE lots.winner_id = 1
+GROUP BY bets.lot_id
+ORDER BY lots.end_time DESC
+LIMIT 9';
+$result = mysqli_query($connect, $cat);
+$lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
 
 $content = include_template('index.php', [
     'categories' => $categories,
