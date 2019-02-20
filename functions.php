@@ -49,7 +49,7 @@ function db_connect($db_config)
 }
 
 function get_categories($connection) {
-    $sql = 'SELECT `id`, `name` FROM categories';
+    $sql = 'SELECT id, name FROM categories';
     $result = mysqli_query($connection, $sql);
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $categories;
@@ -57,7 +57,7 @@ function get_categories($connection) {
 
 function get_lots($connection) {
     $sql = '
-        SELECT lots.name, lots.start_price, lots.img, categories.name AS category_name
+        SELECT lots.name, lots.start_price, lots.img, lots.id,categories.name AS category_name
         FROM lots
         JOIN categories
         ON lots.сategory_id = categories.id
@@ -66,4 +66,17 @@ function get_lots($connection) {
     $result = mysqli_query($connection, $sql);
     $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $lots;
+}
+
+function get_lot($connection, $id) {
+    $sql = '
+    SELECT lots.name AS lot_name, lots.img, categories.name AS category_name, lots.description
+    FROM lots
+    JOIN categories
+    ON lots.сategory_id = categories.id
+    WHERE lots.id = '.$id.';
+    ';
+    $result = mysqli_query($connection, $sql);
+    $lot = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $lot;
 }
