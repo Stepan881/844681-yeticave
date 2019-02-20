@@ -6,38 +6,41 @@ $config = require('config.php');
 $is_auth = rand(0, 1);
 $user_name = 'Степан';
 
-$id_lot = $_GET['lot_id'];
+if (isset($_GET['lot_id'])) {
+  $lot_id = $_GET['lot_id'];
+} else {
+  die('Отсутствует id лота в строке запроса');
+}
 
-if (is_numeric($id_lot)) {
+if (is_numeric($lot_id)) {
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
-$lot = get_lot($connection, $id_lot);
-$header = 'HTTP/1.0 404 Not Found';
+$lot = get_lot($connection, $lot_id);
+} else {
+  die('Параметр id лота не является числом');
 }
 
 if ($lot) {
-  if (isset($id_lot)) {
-    print($lot['lot_name']);
-    echo include_template('lot.php',
-      [
-        'lot' => $lot,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name,
-        'categories' => $categories
-      ]
-    );
-  }
-} else {
-    echo include_template('error.php',
-      [
-        'header' => $header,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name,
-        'categories' => $categories
-      ]
-    );
-  }
 
+  echo include_template('lot.php',
+    [
+      'lot' => $lot,
+      'is_auth' => $is_auth,
+      'user_name' => $user_name,
+      'categories' => $categories
+    ]
+  );
+} else {
+  $header = 'HTTP/1.0 404 Not Found';
+  echo include_template('error.php',
+    [
+
+      'is_auth' => $is_auth,
+      'user_name' => $user_name,
+      'categories' => $categories
+    ]
+  );
+}
 
 
 
