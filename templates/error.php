@@ -1,3 +1,7 @@
+<?php
+header($header);
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>

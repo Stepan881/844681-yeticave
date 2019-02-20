@@ -12,29 +12,30 @@ $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot = get_lot($connection, $id_lot);
 
-if (isset($id_lot)) {
-  print $id_lot;
+$header = 'header("HTTP/1.0 404 Not Found")';
 
-  echo include_template('lot.php',
-    [
-      'lot' => $lot,
-      'is_auth' => $is_auth,
-      'user_name' => $user_name,
-      'categories' => $categories
-    ]
-  );
+if ($lot) {
+  if (isset($id_lot)) {
+    print($lot['lot_name']);
+    echo include_template('lot.php',
+      [
+        'lot' => $lot,
+        'is_auth' => $is_auth,
+        'user_name' => $user_name,
+        'categories' => $categories
+      ]
+    );
+  }
 } else {
-  print 'error';
-  echo include_template('error.php',
-    [
-      'is_auth' => $is_auth,
-      'user_name' => $user_name,
-      'categories' => $categories
-    ]
-  );
-}
-
-
+    echo include_template('error.php',
+      [
+        'header' => $header,
+        'is_auth' => $is_auth,
+        'user_name' => $user_name,
+        'categories' => $categories
+      ]
+    );
+  }
 
 
 

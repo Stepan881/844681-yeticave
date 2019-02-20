@@ -2,7 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-    <title><?= $title; ?></title>
+  <?php
+  // это же как то можно по другому сделать
+    foreach ($lot as $name): ?>
+    <title><?= $name['lot_name']; ?></title>
+    <?php endforeach; ?>
   <link href="../css/normalize.min.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet">
 </head>

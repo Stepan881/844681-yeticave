@@ -80,3 +80,4 @@ function get_lot($connection, $id) {
     $lot = mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $lot;
 }
+
