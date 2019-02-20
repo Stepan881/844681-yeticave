@@ -8,11 +8,12 @@ $user_name = 'Степан';
 
 $id_lot = $_GET['lot_id'];
 
+if (is_numeric($id_lot)) {
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot = get_lot($connection, $id_lot);
-
-$header = 'header("HTTP/1.0 404 Not Found")';
+$header = 'HTTP/1.0 404 Not Found';
+}
 
 if ($lot) {
   if (isset($id_lot)) {
