@@ -6,19 +6,21 @@ $config = require('config.php');
 $is_auth = rand(0, 1);
 $user_name = 'Степан';
 
-if (isset($_GET['lot_id'])) {
-  $lot_id = $_GET['lot_id'];
-} else {
+if (!isset($_GET['lot_id'])) {
   die('Отсутствует id лота в строке запроса');
 }
 
-if (is_numeric($lot_id)) {
+
+$lot_id = $_GET['lot_id'];
+if (!is_numeric($lot_id)) {
+  die('Параметр id лота не является числом');
+}
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot = get_lot($connection, $lot_id);
-} else {
-  die('Параметр id лота не является числом');
-}
+
+
+
 
 if ($lot) {
 
@@ -31,7 +33,7 @@ if ($lot) {
     ]
   );
 } else {
-  $header = 'HTTP/1.0 404 Not Found';
+  header("HTTP/1.0 404 Not Found");
   echo include_template('error.php',
     [
 

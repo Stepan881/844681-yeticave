@@ -70,7 +70,7 @@ function get_lots($connection) {
 
 function get_lot($connection, $id) {
     $sql = '
-    SELECT lots.name AS lot_name, lots.img, categories.name AS category_name, lots.description
+    SELECT lots.name AS name, lots.img, categories.name AS category_name, lots.description
     FROM lots
     JOIN categories
     ON lots.сategory_id = categories.id
@@ -78,6 +78,9 @@ function get_lot($connection, $id) {
     ';
     $result = mysqli_query($connection, $sql);
     $lot = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    return $lot;
+    if (!$lot) {
+      return null;
+    }
+    return $lot[0];
 }
 
