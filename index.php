@@ -12,8 +12,7 @@ $lots = get_lots($connection);
 
 $content = include_template('index.php', [
     'categories' => $categories,
-    'lots' => $lots,
-    'time' => time_tomorrow()
+    'lots' => $lots
 ]);
 
 $layout_content = include_template('layout.php', [

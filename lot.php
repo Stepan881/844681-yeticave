@@ -20,29 +20,29 @@ $categories = get_categories($connection);
 $lot = get_lot($connection, $lot_id);
 
 
-$contentlot = include_template('indexlot.php', [
-  'categories' => $categories,
-  'lot' => $lot
-]);
-$contenterror = include_template('contenterror.php', [
-  'categories' => $categories
-]);
 
 if ($lot) {
-  echo include_template('lot.php',
+  $content = include_template('lot.php', [
+    'categories' => $categories,
+    'lot' => $lot
+  ]);
+  echo include_template('layout.php',
     [
-      'content'=> $contentlot,
-      'lot' => $lot,
+      'content'=> $content,
       'is_auth' => $is_auth,
       'user_name' => $user_name,
       'categories' => $categories
     ]
   );
 } else {
+  $content = include_template('error.php', [
+    'categories' => $categories,
+    'lot' => $lot
+  ]);
   header("HTTP/1.0 404 Not Found");
-  echo include_template('lot.php',
+  echo include_template('layout.php',
     [
-      'content' => $contenterror,
+      'content' => $content,
       'is_auth' => $is_auth,
       'user_name' => $user_name,
       'categories' => $categories

@@ -1,3 +1,4 @@
+<main class="container">
 <section class="promo">
     <h2 class="promo__title">Нужен стафф для катки?</h2>
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
@@ -31,7 +32,7 @@
                             <span class="lot__cost"> <?=format($lot['start_price']);?> <!--b class="rub">р;</b--></span>
                         </div>
                         <div class="lot__timer timer">
-                            <?= $time ;?>
+                            <?= $lot['end_time'] ;?>
                         </div>
                     </div>
                 </div>
@@ -39,3 +40,4 @@
         <?php endforeach; ?>
     </ul>
 </section>
+</main>
