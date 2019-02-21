@@ -84,3 +84,7 @@ function get_lot($connection, $id) {
     return $lot[0];
 }
 
+function time_to_end($date) {
+  $result = date_create_from_format('Y-m-d H:i:s', $date);
+  return $result->format('H:i');
+}

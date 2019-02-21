@@ -32,7 +32,7 @@
                             <span class="lot__cost"> <?=format($lot['start_price']);?> <!--b class="rub">р;</b--></span>
                         </div>
                         <div class="lot__timer timer">
-                            <?= $lot['end_time'] ;?>
+                            <?= time_to_end($lot['end_time']);?>
                         </div>
                     </div>
                 </div>
