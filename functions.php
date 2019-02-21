@@ -86,10 +86,10 @@ function get_lot($connection, $id) {
 
 function time_to_end($data_end) {
   $now = new DateTime();
-  $date = date_create_from_format("Y-m-d H:i:s", $data_end); // '2119-02-22 24:00:00'
-  if ($now < $date){
-  $interval= $now->diff($date);
-  $result =  ($interval->days * 24) + $interval->h . ':' . $interval->i;
+  $date = date_create_from_format("Y-m-d H:i:s", $data_end);
+  if ($now < $date) {
+    $interval= $now->diff($date);
+    $result =  ($interval->days * 24) + $interval->h . ':' . $interval->i;
     return $result;
   }
   return '00:00';
