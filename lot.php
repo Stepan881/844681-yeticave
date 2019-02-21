@@ -26,29 +26,20 @@ if ($lot) {
     'categories' => $categories,
     'lot' => $lot
   ]);
-  echo include_template('layout.php',
-    [
-      'content'=> $content,
-      'is_auth' => $is_auth,
-      'user_name' => $user_name,
-      'categories' => $categories
-    ]
-  );
 } else {
   $content = include_template('error.php', [
     'categories' => $categories,
     'lot' => $lot
   ]);
   header("HTTP/1.0 404 Not Found");
-  echo include_template('layout.php',
-    [
-      'content' => $content,
-      'is_auth' => $is_auth,
-      'user_name' => $user_name,
-      'categories' => $categories
-    ]
-  );
 }
 
-
+echo include_template('layout.php',
+  [
+    'content' => $content,
+    'is_auth' => $is_auth,
+    'user_name' => $user_name,
+    'categories' => $categories
+  ]
+);
 
