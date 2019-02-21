@@ -70,7 +70,7 @@ function get_lots($connection) {
 
 function get_lot($connection, $id) {
     $sql = '
-    SELECT lots.name AS name, lots.img, categories.name AS category_name, lots.description
+    SELECT lots.name AS name, lots.img, categories.name AS category_name, lots.description, lots.end_time
     FROM lots
     JOIN categories
     ON lots.сategory_id = categories.id

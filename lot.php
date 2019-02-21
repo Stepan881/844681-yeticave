@@ -19,8 +19,6 @@ $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot = get_lot($connection, $lot_id);
 
-
-
 if ($lot) {
   $content = include_template('lot.php', [
     'categories' => $categories,
