@@ -84,7 +84,10 @@ function get_lot($connection, $id) {
     return $lot[0];
 }
 
-function time_to_end($date) {
-  $result = date_create_from_format('Y-m-d H:i:s', $date);
-  return $result->format('H:i');
+function time_to_end($data_end) {
+  $now = new DateTime(); // текущее время на сервере
+  $date = date_create_from_format("Y-m-d H:i:s", $data_end); // задаем дату в любом формате
+  $interval = $now->diff($date); // получаем разницу в виде объекта DateInterval
+  $result = sprintf('%02d:%02d', $interval->h, $interval->i);
+  return $result;
 }
