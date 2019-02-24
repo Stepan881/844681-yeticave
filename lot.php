@@ -34,6 +34,7 @@ if ($lot) {
 
 echo include_template('layout.php',
   [
+    'title' => $lot['name'],
     'content' => $content,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
