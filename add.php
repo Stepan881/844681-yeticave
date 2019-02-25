@@ -8,8 +8,55 @@ $user_name = 'Степан';
 
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
+$lot_data = [];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $lot_data = $_POST;
+  $errors = [];
+  // TODO: проверить существование фала в массиве _FILES
+  // TODO: если фаил есть загружаем
+  // TODO: валидация данных формы
+  // TODO: если валид. проходит сохраняем лот, и редирект на лот
+  // TODO: если валид. не прохолдит, формас ошибкой
+  if (!isset($_FILES['lot-image'])) {
+    die();
+  }
+
+  $filename = $_FILES['lot-image']['name'];
+  $path = $_FILES['lot-image']['tmp_name'];
+  $image = (upload_img($path, $filename));
+
+  // TODO: Проверка на пустые поля
+
+  $required = [
+    'lot-name',
+    'lot-category',
+    'lot-message',
+    'lot-rate',
+    'lot-step',
+    'lot-date'
+  ];
+
+  foreach ($required as $key) {
+    if (empty($_POST[$key])) {
+      $errors[$key] = 'Это поле надо заполнить';
+    }
+  }
+
+print_r($error);
+
+  $lot_id = add_lot($connection, $lot_data, $image);
+  if ($lot_id) {
+    header("Location: lot.php?lot_id=" . $lot_id);
+    exit();
+  } else {
+  print_r ($_FILES);
+  }
+}
+
 
 $content = include_template('add-lot.php', [
+  'errors' => $errors,
   'categories' => $categories,
   'lot' => $lot
 ]);
@@ -24,35 +71,3 @@ echo include_template('layout.php',
   ]
 );
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $img = $_POST['lot-image'];
-
-  $name = strip_tags($_POST['lot-name']);
-  $categories_id = $_POST['lot-category'];
-  $descriptions = strip_tags($_POST['lot-message']);
-  $start_price = $_POST['lot-rate'];
-  $step = $_POST['lot-step'];
-  $end_time = $_POST['lot-date'];
-
-
-  $filename = uniqid() . '.gif';
-  $img['path'] = $filename;
-  $url = move_uploaded_file($_FILES['lot-image']['tmp_name'], 'img/' . $filename);
-
-
-
-  $sql = 'INSERT INTO lots (create_time, img, name, сategory_id, description, start_price, step, end_time, owner_id) 
-          VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, 1)';
-
-    $stmt = db_get_prepare_stmt($connection, $sql, [$filename, $name, $categories_id, $descriptions, $start_price, $step, $end_time]);
-    $res = mysqli_stmt_execute($stmt);
-
-    if ($res) {
-      $gif_id = mysqli_insert_id($connection);
-      print ($filename.' '.$name.' '.categories_id.' '.$descriptions.' '.$start_price.' '.$step.' '.$end_time.' ');
-      header("Location: lot.php?lot_id=" . $gif_id);
-    }
-    else {
-     print_r ($stmt);
-    }
-}

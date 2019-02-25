@@ -118,8 +118,62 @@ function time_to_end($data_end) {
   $date = date_create_from_format("Y-m-d H:i:s", $data_end);
   if ($now < $date) {
     $interval= $now->diff($date);
-    $result =  ($interval->days * 24) + $interval->h . ':' . $interval->i;
+    $interval_i = sprintf('%02d',  $interval->i);
+    $result =  ($interval->days * 24) + $interval->h . ':' . $interval_i;
     return $result;
   }
   return '00:00';
 }
+
+function add_lot($connection, $lot_data ,$img) {
+  $sql = "INSERT INTO lots (img, name, сategory_id, description, start_price, step, end_time, owner_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  $stmt = db_get_prepare_stmt($connection, $sql, [
+  $lot_data['img'] = $img,
+  $lot_data['lot-name'],
+  $lot_data['lot-category'],
+  $lot_data['lot-message'],
+  $lot_data['lot-rate'],
+  $lot_data['lot-step'],
+  date ('Y-m-d H:i:s', strtotime($lot_data['lot-date'] . ' 22:45:59')),
+  $lot_data['owner_id']  = 2
+  ]);
+
+  $res = mysqli_stmt_execute($stmt);
+
+  if (!$res) {
+    die(mysqli_error($connection));
+  }
+  $lot_id = mysqli_insert_id($connection);
+  return $lot_id;
+}
+
+function validate_lot($lot_data){
+
+  return $result;
+}
+
+function parse_extension($filename) {
+  $info = new SplFileInfo($filename);
+  return $info->getExtension();
+}
+
+/**
+ * Загрузка файла на сервер
+ *
+ * @param $tmp_path string временный путь до файла
+ * @param $filename string реальное имя файла {для извлечения расширения}
+ *
+ * @return string путь до загруженного файла
+ */
+
+function upload_img($tmp_path, $filename) {
+  // TODO: Получить расширение файла
+  // TODO: сформировать переменную path имени файла и расширения
+  $ext = parse_extension($filename);
+  $path = 'img/' . uniqid() . '.' . $ext;
+  // TODO: передать вторым аргументам url
+  move_uploaded_file($tmp_path, $path);
+  return $path;
+}
+

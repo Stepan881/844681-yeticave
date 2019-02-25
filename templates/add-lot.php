@@ -7,13 +7,13 @@
               </li>
           <?php endforeach; ?>
         </ul>
-    </nav>                                                      // add.php // https://echo.htmlacademy.ru
+    </nav>
 <form class="form form--add-lot container form--invalid" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
   <h2>Добавление лота</h2>
   <div class="form__container-two">
-    <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
+    <div class="form__item"> <!-- form__item--invalid -->
       <label for="lot-name">Наименование</label>
-      <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" required>
+      <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" required value="<?= $_POST['lot-name'];?>">
       <span class="form__error">Введите наименование лота</span>
     </div>
     <div class="form__item">
@@ -64,6 +64,6 @@
     </div>
   </div>
   <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
-  <button type="submit" class="button" name="done">Добавить лот</button>
+  <button type="submit" class="button">Добавить лот</button>
 </form>
 </main>
