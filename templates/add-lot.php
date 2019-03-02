@@ -13,14 +13,15 @@
   <div class="form__container-two">
     <div class="form__item"> <!-- form__item--invalid -->
       <label for="lot-name">Наименование</label>
-      <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" required value="<?= $_POST['lot-name'];?>">
+      <input id="lot-name" type="text" name="name" placeholder="Введите наименование лота" required value="<?= $_POST['name'];?>">
       <span class="form__error">Введите наименование лота</span>
     </div>
     <div class="form__item">
       <label for="category">Категория</label>
-      <select id="category" name="lot-category" required>
+      <select id="category" name="category_id" required>
+        <option>Выберите категорию</option>
         <?php foreach ($categories as $category):?>
-            <option value="<?=$category['id'] ?>"><?=$category['name'];?></option>
+        <option value="<?=$category['id'] ?>"><?=$category['name'];?></option>
         <?php endforeach; ?>
       </select>
       <span class="form__error">Выберите категорию</span>
@@ -28,7 +29,7 @@
   </div>
   <div class="form__item form__item--wide">
     <label for="message">Описание</label>
-    <textarea id="message" name="lot-message" placeholder="Напишите описание лота" required></textarea>
+    <textarea id="message" name="description" placeholder="Напишите описание лота" required></textarea>
     <span class="form__error">Напишите описание лота</span>
   </div>
   <div class="form__item form__item--file"> <!-- form__item--uploaded -->
@@ -40,7 +41,7 @@
       </div>
     </div>
     <div class="form__input-file">
-      <input class="visually-hidden" type="file" id="photo2" name="lot-image" value="">
+      <input class="visually-hidden" type="file" id="photo2" name="img" value="">
       <label for="photo2">
         <span>+ Добавить</span>
       </label>
@@ -49,17 +50,17 @@
   <div class="form__container-three">
     <div class="form__item form__item--small">
       <label for="lot-rate">Начальная цена</label>
-      <input id="lot-rate" type="number" name="lot-rate" placeholder="0" required>
+      <input id="lot-rate" type="number" name="start_price" placeholder="0" required>
       <span class="form__error">Введите начальную цену</span>
     </div>
     <div class="form__item form__item--small">
       <label for="lot-step">Шаг ставки</label>
-      <input id="lot-step" type="number" name="lot-step" placeholder="0" required>
+      <input id="lot-step" type="number" name="step" placeholder="0" required>
       <span class="form__error">Введите шаг ставки</span>
     </div>
     <div class="form__item">
       <label for="lot-date">Дата окончания торгов</label>
-      <input class="form__input-date" id="lot-date" type="date" name="lot-date" required>
+      <input class="form__input-date" id="lot-date" type="date" name="end_time" required>
       <span class="form__error">Введите дату завершения торгов</span>
     </div>
   </div>

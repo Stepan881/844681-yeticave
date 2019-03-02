@@ -1,9 +1,30 @@
 <?php
-date_default_timezone_set('Europe/Moscow');
-require_once('functions.php');
-$config = require('config.php');
+require_once('functions/db.php');
+require_once('functions/template.php');
+require_once('functions/upload.php');
+require_once('functions/validate.php');
 
-echo parse_extension('tee.tcvbvcscxbxt');
+$img = '';
+
+$lot_data = [
+  'name' => 'sdf',
+  'category_id' => 7,
+  'end_time' => '30.02.2019',
+  'description' => 'description',
+  'start_price' => 12,
+  'step' => 4
+];
+
+$errors = validate_lot($lot_data, $img);
+
+
+var_dump($errors);
+
+
+
+
+
+
 //$connection = db_connect($config['db']);
 //$lot_data = [];
 //
