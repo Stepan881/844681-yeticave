@@ -4,22 +4,33 @@ require_once('functions/template.php');
 require_once('functions/upload.php');
 require_once('functions/validate.php');
 
-$img = '';
-
-$lot_data = [
-  'name' => 'sdf',
-  'category_id' => 7,
-  'end_time' => '30.02.2019',
-  'description' => 'description',
-  'start_price' => 12,
-  'step' => 4
-];
-
-$errors = validate_lot($lot_data, $img);
+//
+//$mime_type = '2019-03-01';
+//
+//var_dump(validate_end_time($mime_type));
+//
+//
+//
 
 
-var_dump($errors);
 
+//
+//$img = '';
+//
+//$lot_data = [
+//  'name' => 'sdf',
+//  'category_id' => 7,
+//  'end_time' => '30.02.2019',
+//  'description' => 'description',
+//  'start_price' => 12,
+//  'step' => 4
+//];
+//
+//$errors = validate_lot($lot_data, $img);
+//
+//
+//var_dump($errors);
+//
 
 
 

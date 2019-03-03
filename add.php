@@ -13,47 +13,24 @@ $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot_data = [];
 
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $lot_data = $_POST;
+  $file_data = $_FILES['img'];
 
-  $filename = $_FILES['img']['name'];
-  $path = $_FILES['img']['tmp_name'];
-  $image = (upload_img($path, $filename));
+  $errors = validate_lot($lot_data, $file_data);
 
-  validate_lot($lot_data);
+  if (!$errors) {
+    $lot_data['img'] = (upload_img($file_data['tmp_name'], $file_data['name']));
+    $lot_id = add_lot($connection, $lot_data);
 
-  var_dump($lot_data);
-
-
-  // TODO: проверить существование фала в массиве _FILES
-  // TODO: если фаил есть загружаем
-  // TODO: валидация данных формы
-  // TODO: если валид. проходит сохраняем лот, и редирект на лот
-  // TODO: если валид. не прохолдит, формас ошибкой
-  if (!isset($_FILES['img'])) {
-    die();
-  }
-
-  $filename = $_FILES['img']['name'];
-  $path = $_FILES['img']['tmp_name'];
-  $image = (upload_img($path, $filename));
-
-  // TODO: Проверка на пустые поля
-
-
-
-
-print_r($error);
-  $lot_id = add_lot($connection, $lot_data, $image);
-  if ($lot_id) {
-    header("Location: lot.php?lot_id=" . $lot_id);
-    exit();
-  } else {
-  print_r ($_FILES);
+    if ($lot_id) {
+      header("Location: lot.php?lot_id=" . $lot_id);
+      exit();
+    }
   }
 }
+
+var_dump($errors);
 
 
 $content = include_template('add-lot.php', [

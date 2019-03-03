@@ -2,13 +2,11 @@
 /**
  * функция валидации данных формы добавления лота
  * @param array $lot_data данные полученные из формы
+ * @param array $file_data данные полученные из формы (Фото)
  * @return array массив ошибок
  */
-function validate_lot($lot_data){
- /* array(6) { ["name"]=> string(2) "12" ["category_id"]=> string(1) "4" ["description"]=> string(2) "12"
-  ["start_price"]=> string(2) "12" ["step"]=> string(2) "12" ["end_time"]=> string(10) "2020-12-12" }*/
+function validate_lot($lot_data, $file_data){
   $errors = [];
-
 
   if ($error = validate_lot_name($lot_data['name'])) {
     $errors['name'] = $error;
@@ -32,10 +30,12 @@ function validate_lot($lot_data){
   if ($error = validate_end_time($lot_data['end_time'])) {
     $errors['end_time'] = $error;
   }
+  if ($error = validate_file_img($file_data)) {
+    $errors['img'] = $error;
+  }
 
   return $errors;
 }
-
 
 function validate_lot_name($name){
   if($name === ''){
@@ -46,7 +46,6 @@ function validate_lot_name($name){
   }
   return null;
 }
-
 
 function validate_lot_description($name){
   if($name === '') {
@@ -70,7 +69,7 @@ function validate_lot_start_price($name){
 
 function validate_lot_step($name){
   if($name === ''){
-    return 'Шаг ставки!';
+    return 'Введите шаг ставки!';
   }
   if($name <= 0 ){
     return 'Шаг не должн быть 0!';
@@ -79,23 +78,53 @@ function validate_lot_step($name){
 }
 
 function validate_category_id($name){
-  if($name === 0){
+  if($name == 0){
     return 'Выберите категорию!';
   }
   return null;
 }
 
 function validate_end_time($end_time){
-  $date1 = strtotime(date('d.m.Y'));
-  $dateTime = new DateTime($end_time);
-  $date2 = $dateTime->format('U');
 
-  if ($date1+86400 > $date2) {
-    return 'Дата должна быть на сутки больше текущей!';
-  }
-  if ($date1+2419200 < $date2) {
-    return 'Дата должна быть на больше месяца!';
-  }
+  if (!check_date_format($end_time)){
 
+    return 'Неверный формат даты';
+  }
+  if ($end_time <= date('Y-m-d')){
+    return 'Дата окончания аукциона должна быть больше текущей!';
+  }
   return null;
+}
+
+/**
+ * Проверяет, что переданная дата соответствует формату ДД.ММ.ГГГГ
+ * @param string $date строка с датой
+ * @return bool
+ */
+function check_date_format($date) {
+  $result = false;
+  $regexp = '/(\d{4})\-(\d{2})\-(\d{2})/m';
+  if (preg_match($regexp, $date, $parts) && count($parts) == 4) {
+    $result = checkdate($parts[3], $parts[2], $parts[1]);
+  }
+  return $result;
+}
+
+function validate_file_img($file_data){
+  if (empty($file_data['tmp_name'])){
+    return 'Вы не выбрали фаил';
+  }
+  if (!is_image($file_data['type'])){
+    return 'Загрузите jpg, png, gif';
+  }
+  return null;
+}
+
+function is_image($mime_type){
+  $allow_types = [
+    'image/jpeg',
+    'image/png',
+    'image/gif'
+  ];
+  return (array_search($mime_type, $allow_types) !== false);
 }

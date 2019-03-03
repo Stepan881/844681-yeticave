@@ -75,17 +75,17 @@ function get_lot($connection, $id) {
   return $lot[0];
 }
 
-function add_lot($connection, $lot_data ,$img) {
+function add_lot($connection, $lot_data) {
   $sql = "INSERT INTO lots (img, name, сategory_id, description, start_price, step, end_time, owner_id)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = db_get_prepare_stmt($connection, $sql, [
-    $lot_data['img'] = $img,
-    $lot_data['lot-name'],
-    $lot_data['lot-category'],
-    $lot_data['lot-message'],
-    $lot_data['lot-rate'],
-    $lot_data['lot-step'],
-    date ('Y-m-d H:i:s', strtotime($lot_data['lot-date'])),
+    $lot_data['img'],
+    $lot_data['name'],
+    $lot_data['category_id'],
+    $lot_data['description'],
+    $lot_data['start_price'],
+    $lot_data['step'],
+    date ('Y-m-d H:i:s', strtotime($lot_data['end_time'])),
     $lot_data['owner_id']  = 2
   ]);
 
