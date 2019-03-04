@@ -23,23 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $file_data = $_FILES['img'];
 
   $user_avatar = validate_avatar_img($file_data);
-  $errors = validate_user($user_data, $connection);
-
+  $errors = validate_user($connection, $user_data);
 
   if (!$errors and !$user_avatar) {
- //  echo 'Все OK';
-    $user_avatar['img'] = (upload_img($file_data['tmp_name'], $file_data['name']));
+    $user_data['avatar'] = (upload_img($file_data['tmp_name'], $file_data['name']));
+    $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
 
-//    $user_id = validate_user_email($connection, $user_data);
+    $user_id = add_user($connection, $user_data);
 
-//    if ($user_id) {
-//      header('Location: index.php');
-//      exit();
-//    }
+    if ($user_id) {
+      header('Location: index.php');
+      exit();
+    }
   }
 }
-
-
 
 $content = include_template('sign-up.php', [
   'errors' => $errors,

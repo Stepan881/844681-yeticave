@@ -129,14 +129,7 @@ function is_image($mime_type){
   return (array_search($mime_type, $allow_types) !== false);
 }
 
-/**
- * функция валидации данных формы добавления лота
- * @param array $user_data данные полученные из формы
- * @param array $connection соединение с бд
- * @return array массив ошибок
- */
-
-function validate_user($user_data, $connection){
+function validate_user($connection, $user_data){
   $errors = [];
   if ($error = validate_email($user_data['email'], $connection)) {
     $errors['email'] = $error;

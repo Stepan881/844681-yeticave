@@ -111,3 +111,22 @@ function validate_user_email($mail, $connection) {
   }
   return null;
 }
+
+function add_user($connection, $user_data) {
+  $sql = 'INSERT INTO users (email, password, name, contacts, avatar)
+          VALUES (?, ?, ?, ?, ?)';
+  $stmt = db_get_prepare_stmt($connection, $sql, [
+    $user_data['email'],
+    $user_data['password'],
+    $user_data['name'],
+    $user_data['contacts'],
+    $user_data['avatar'],
+  ]);
+
+  $res = mysqli_stmt_execute($stmt);
+
+  if (!$res) {
+    die(mysqli_error($connection));
+  }
+  return $res;
+}
