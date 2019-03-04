@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user_id = add_user($connection, $user_data);
     if ($user_id) {
-      $counter_name = "visitcount";
+//      $counter_name = "visitcount";
 
 
 
