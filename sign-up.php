@@ -26,12 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $errors = validate_user($connection, $user_data);
 
   if (!$errors and !$user_avatar) {
+
     $user_data['avatar'] = (upload_img($file_data['tmp_name'], $file_data['name']));
     $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
 
     $user_id = add_user($connection, $user_data);
-
     if ($user_id) {
+      $counter_name = "visitcount";
+
+
+
+
       header('Location: index.php');
       exit();
     }
