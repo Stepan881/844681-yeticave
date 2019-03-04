@@ -3,7 +3,7 @@ date_default_timezone_set('Europe/Moscow');
 require_once('functions/db.php');
 require_once('functions/template.php');
 require_once('functions/upload.php');
-require_once('functions/validate.php');
+require_once('functions/validate_lot.php');
 $config = require('config.php');
 
 $is_auth = rand(0, 1);
@@ -33,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $content = include_template('add-lot.php', [
   'errors' => $errors,
   'categories' => $categories,
-  'lot' => $lot
+  'lot' => $lot,
+  'lot_data' => $lot_data
 ]);
 
 echo include_template('layout.php',

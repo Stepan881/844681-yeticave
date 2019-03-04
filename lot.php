@@ -11,7 +11,6 @@ if (!isset($_GET['lot_id'])) {
   die('Отсутствует id лота в строке запроса');
 }
 
-
 $lot_id = $_GET['lot_id'];
 if (!is_numeric($lot_id)) {
   die('Параметр id лота не является числом');

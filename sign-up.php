@@ -10,7 +10,7 @@ date_default_timezone_set('Europe/Moscow');
 require_once('functions/db.php');
 require_once('functions/template.php');
 require_once('functions/upload.php');
-require_once('functions/validate.php');
+require_once('functions/validate_user.php');
 $config = require('config.php');
 
 $connection = db_connect($config['db']);
@@ -21,10 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $user_data = $_POST;
   $file_data = $_FILES['img'];
 
-  $user_avatar = validate_avatar_img($file_data);
-  $errors = validate_user($connection, $user_data);
+  $errors = validate_user($connection, $user_data, $file_data);
 
-  if (!$errors and !$user_avatar) {
+  if (!$errors) {
     $user_data['avatar'] = '';
     if (!$_FILES['img']['name']) {
       $user_data['avatar'] = (upload_img($file_data['tmp_name'], $file_data['name']));
@@ -41,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $content = include_template('sign-up.php', [
   'errors' => $errors,
   'user_avatar' => $user_avatar,
-  'categories' => $categories
+  'categories' => $categories,
+  'user_data' => $user_data
 ]);
 
 echo include_template('layout.php',
