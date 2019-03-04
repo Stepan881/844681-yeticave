@@ -128,3 +128,79 @@ function is_image($mime_type){
   ];
   return (array_search($mime_type, $allow_types) !== false);
 }
+
+/**
+ * функция валидации данных формы добавления лота
+ * @param array $user_data данные полученные из формы
+ * @param array $connection соединение с бд
+ * @return array массив ошибок
+ */
+
+function validate_user($user_data, $connection){
+  $errors = [];
+  if ($error = validate_email($user_data['email'], $connection)) {
+    $errors['email'] = $error;
+  }
+  if ($error = validate_password($user_data['password'])) {
+    $errors['password'] = $error;
+  }
+  if ($error = validate_name($user_data['name'])) {
+    $errors['name'] = $error;
+  }
+  if ($error = validate_contacts($user_data['contacts'])) {
+    $errors['contacts'] = $error;
+  }
+
+  return $errors;
+}
+
+function validate_email($name ,$connection){
+  $email = validate_user_email($name, $connection);
+
+  if ($email){
+    return 'Пользователь с этим email уже зарегистрирован';
+  }
+  if (!filter_var($name, FILTER_VALIDATE_EMAIL)) {
+    return 'E-mail адрес указан не верно.';
+  }
+return null;
+}
+
+function validate_password($name){
+  if($name === ''){
+    return 'Заполните пароль!';
+  }
+  if(mb_strlen($name) > 100 ){
+    return 'Пароль не должен превышать 100 символов!';
+  }
+
+  return null;
+}
+
+function validate_name($name){
+  if($name === ''){
+    return 'Введите Имя!';
+  }
+  if(mb_strlen($name) > 100 ){
+    return 'Имя не должно превышать 100 символов!';
+  }
+  return null;
+}
+
+function validate_contacts($name){
+  if($name === ''){
+    return 'Введите Контактные данные!';
+  }
+  if(mb_strlen($name) > 255 ){
+    return 'Контактные данные не должны превышать 255 символов!';
+  }
+  return null;
+}
+function validate_avatar_img($file_data){
+  if (!empty($file_data['tmp_name'])){
+    if (!is_image($file_data['type'])){
+      return 'Загрузите jpg, png, gif';
+    }
+  }
+  return null;
+}

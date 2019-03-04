@@ -27,6 +27,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
   return $stmt;
 }
 
+
 function db_connect($db_config)
 {
   $connection = mysqli_connect($db_config['host'], $db_config['user'], $db_config['password'], $db_config['database']);
@@ -76,8 +77,8 @@ function get_lot($connection, $id) {
 }
 
 function add_lot($connection, $lot_data) {
-  $sql = "INSERT INTO lots (img, name, сategory_id, description, start_price, step, end_time, owner_id)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = 'INSERT INTO lots (img, name, сategory_id, description, start_price, step, end_time, owner_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
   $stmt = db_get_prepare_stmt($connection, $sql, [
     $lot_data['img'],
     $lot_data['name'],
@@ -96,4 +97,17 @@ function add_lot($connection, $lot_data) {
   }
   $lot_id = mysqli_insert_id($connection);
   return $lot_id;
+}
+
+function validate_user_email($mail, $connection) {
+
+  $email = mysqli_real_escape_string($connection, $mail);
+  $sql = "SELECT email FROM users WHERE email = '$email'";
+  $res = mysqli_query($connection, $sql);
+
+
+  if (mysqli_num_rows($res) > 0) {
+    return 'Пользователь с этим email уже зарегистрирован';
+  }
+  return null;
 }

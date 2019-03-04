@@ -30,9 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 }
 
-var_dump($errors);
-
-
 $content = include_template('add-lot.php', [
   'errors' => $errors,
   'categories' => $categories,
