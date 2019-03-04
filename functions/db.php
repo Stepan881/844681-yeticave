@@ -99,17 +99,11 @@ function add_lot($connection, $lot_data) {
   return $lot_id;
 }
 
-function validate_user_email($mail, $connection) {
-
+function isset_email($mail, $connection) {
   $email = mysqli_real_escape_string($connection, $mail);
   $sql = "SELECT email FROM users WHERE email = '$email'";
   $res = mysqli_query($connection, $sql);
-
-
-  if (mysqli_num_rows($res) > 0) {
-    return 'Пользователь с этим email уже зарегистрирован';
-  }
-  return null;
+  return mysqli_num_rows($res);
 }
 
 function add_user($connection, $user_data) {

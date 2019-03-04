@@ -15,7 +15,6 @@ $config = require('config.php');
 
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
-
 $user_data = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -31,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $user_data['avatar'] = (upload_img($file_data['tmp_name'], $file_data['name']));
     }
     $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
-
     $user_id = add_user($connection, $user_data);
     if ($user_id) {
       header('Location: index.php');

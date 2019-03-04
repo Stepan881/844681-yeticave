@@ -47,38 +47,38 @@ function validate_lot_name($name){
   return null;
 }
 
-function validate_lot_description($name){
-  if($name === '') {
+function validate_lot_description($description){
+  if($description === '') {
     return 'Заполните описание лота!';
   }
-  if(mb_strlen($name) > 255 ){
+  if(mb_strlen($description) > 255 ){
     return 'Описание не должно превышать 255 символов!';
   }
   return null;
 }
 
-function validate_lot_start_price($name){
-  if($name === ''){
+function validate_lot_start_price($start_price){
+  if($start_price === ''){
     return 'Заполните цену лота!';
   }
-  if($name <= 0 ){
+  if($start_price <= 0 ){
     return 'Цена не должна быть 0!';
   }
   return null;
 }
 
-function validate_lot_step($name){
-  if($name === ''){
+function validate_lot_step($lot_step){
+  if($lot_step === ''){
     return 'Введите шаг ставки!';
   }
-  if($name <= 0 ){
+  if($lot_step <= 0 ){
     return 'Шаг не должн быть 0!';
   }
   return null;
 }
 
-function validate_category_id($name){
-  if($name == 0){
+function validate_category_id($category_id){
+  if($category_id == 0){
     return 'Выберите категорию!';
   }
   return null;
@@ -143,27 +143,24 @@ function validate_user($connection, $user_data){
   if ($error = validate_contacts($user_data['contacts'])) {
     $errors['contacts'] = $error;
   }
-
   return $errors;
 }
 
-function validate_email($name ,$connection){
-  $email = validate_user_email($name, $connection);
-
-  if ($email){
-    return 'Пользователь с этим email уже зарегистрирован';
-  }
-  if (!filter_var($name, FILTER_VALIDATE_EMAIL)) {
+function validate_email($email, $connection){
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     return 'E-mail адрес указан не верно.';
   }
-return null;
+  if (isset_email($email, $connection)){
+    return 'Пользователь с этим email уже зарегистрирован';
+  }
+  return null;
 }
 
-function validate_password($name){
-  if($name === ''){
+function validate_password($password){
+  if($password === ''){
     return 'Заполните пароль!';
   }
-  if(mb_strlen($name) > 100 ){
+  if(mb_strlen($password) > 100 ){
     return 'Пароль не должен превышать 100 символов!';
   }
 
@@ -180,11 +177,11 @@ function validate_name($name){
   return null;
 }
 
-function validate_contacts($name){
-  if($name === ''){
+function validate_contacts($contacts){
+  if($contacts === ''){
     return 'Введите Контактные данные!';
   }
-  if(mb_strlen($name) > 255 ){
+  if(mb_strlen($contacts) > 255 ){
     return 'Контактные данные не должны превышать 255 символов!';
   }
   return null;
