@@ -124,3 +124,11 @@ function add_user($connection, $user_data) {
   }
   return $res;
 }
+
+function validate_login_email_db($connection, $form) {
+  $email = mysqli_real_escape_string($connection, $form['email']);
+  $sql = "SELECT * FROM users WHERE email = '$email'";
+  $res = mysqli_query($connection, $sql);
+  $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+  return $user;
+}

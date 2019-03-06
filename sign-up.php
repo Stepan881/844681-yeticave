@@ -12,7 +12,7 @@ require_once('functions/template.php');
 require_once('functions/upload.php');
 require_once('functions/validate_user.php');
 $config = require('config.php');
-
+session_start();
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $user_data = [];
@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
     $user_id = add_user($connection, $user_data);
     if ($user_id) {
+      $_SESSION['user'] = $user_data;
       header('Location: index.php');
       exit();
     }

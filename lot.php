@@ -3,9 +3,15 @@ date_default_timezone_set('Europe/Moscow');
 require_once('functions/db.php');
 require_once('functions/template.php');
 $config = require('config.php');
-
-$is_auth = rand(0, 1);
-$user_name = 'Степан';
+$user_name = '';
+session_start();
+if (isset($_SESSION['user'])) {
+  $is_auth = true;
+  $user_name = $_SESSION['user']['name'];
+}
+else {
+  $is_auth = false;
+}
 
 if (!isset($_GET['lot_id'])) {
   die('Отсутствует id лота в строке запроса');
@@ -19,15 +25,22 @@ $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot = get_lot($connection, $lot_id);
 
+$error = [
+  'title' => '404 Страница не найдена',
+  'description' => 'Данной страницы не существует на сайте.'
+];
+
 if ($lot) {
   $content = include_template('lot.php', [
     'categories' => $categories,
-    'lot' => $lot
+    'lot' => $lot,
+    'is_auth' => $is_auth
   ]);
 } else {
   $content = include_template('error.php', [
     'categories' => $categories,
-    'lot' => $lot
+    'lot' => $lot,
+    'error' => $error
   ]);
   header("HTTP/1.0 404 Not Found");
 }

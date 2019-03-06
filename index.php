@@ -4,8 +4,14 @@ require_once('functions/db.php');
 require_once('functions/template.php');
 $config = require('config.php');
 
-$is_auth = rand(0, 1);
-$user_name = 'Степан'; // укажите здесь ваше имя1
+session_start();
+if (isset($_SESSION['user'])) {
+  $is_auth = true;
+  $user_name = $_SESSION['user']['name'];
+}
+else {
+  $is_auth = false;
+}
 
 $connection = db_connect($config['db']);
 $categories = get_categories($connection);
@@ -13,7 +19,8 @@ $lots = get_lots($connection);
 
 $content = include_template('index.php', [
     'categories' => $categories,
-    'lots' => $lots
+    'lots' => $lots,
+    'is_auth' => $is_auth
 ]);
 
 $layout_content = include_template('layout.php', [
