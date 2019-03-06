@@ -13,20 +13,13 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $form = $_POST;
 
-  $errors = validate_login($form);
+  $user = validate_login_email_db($connection, $form);
+  $errors = validate_login($connection, $form, $user);
 
   if (!$errors) {
-    $user = validate_login_email_db($connection, $form);
-    if (!$user['email']) {
-      $errors['email'] = 'Нет такого майла!';
-    }
-    if (password_verify($form['password'], $user['password'])) {
-      $_SESSION['user'] = $user;
-      header('Location: index.php');
-      exit();
-    } else {
-      $errors['password'] = 'Не верный пароль!';
-    }
+    $_SESSION['user_id'] = $user;
+    header('Location: index.php');
+    exit();
   }
 }
 

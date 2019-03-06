@@ -132,3 +132,25 @@ function validate_login_email_db($connection, $form) {
   $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
   return $user;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

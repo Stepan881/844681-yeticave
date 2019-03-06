@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
     $user_id = add_user($connection, $user_data);
     if ($user_id) {
-      $_SESSION['user'] = $user_data;
+      $users_id = validate_login_email_db($connection, $user_data);
+      $_SESSION['user_id'] = $users_id;
       header('Location: index.php');
       exit();
     }

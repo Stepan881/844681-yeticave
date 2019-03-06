@@ -10,10 +10,9 @@ $connection = db_connect($config['db']);
 $categories = get_categories($connection);
 $lot_data = [];
 
-session_start();
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user_id'])) {
   $is_auth = true;
-  $user_name = $_SESSION['user']['name'];
+  $user_name = $_SESSION['user_id']['name'];
 }
 else {
   $is_auth = false;

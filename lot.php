@@ -5,9 +5,9 @@ require_once('functions/template.php');
 $config = require('config.php');
 $user_name = '';
 session_start();
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user_id'])) {
   $is_auth = true;
-  $user_name = $_SESSION['user']['name'];
+  $user_name = $_SESSION['user_id']['name'];
 }
 else {
   $is_auth = false;
