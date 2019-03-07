@@ -5,17 +5,27 @@
  * Date: 04.03.2019
  * Time: 10:11
  */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
 
 date_default_timezone_set('Europe/Moscow');
+require_once('functions/main.php');
 require_once('functions/db.php');
 require_once('functions/template.php');
 require_once('functions/upload.php');
 require_once('functions/validate_user.php');
+
 $config = require('config.php');
-session_start();
+
 $connection = db_connect($config['db']);
+
 $categories = get_categories($connection);
 $user_data = [];
+$user = null;
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $user_data = $_POST;
@@ -31,9 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
     $user_id = add_user($connection, $user_data);
     if ($user_id) {
-      $users_id = validate_login_email_db($connection, $user_data);
-      $_SESSION['user_id'] = $users_id;
-      header('Location: index.php');
+      header('Location: login.php');
       exit();
     }
   }
@@ -41,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $content = include_template('sign-up.php', [
   'errors' => $errors,
-  'user_avatar' => $user_avatar,
   'categories' => $categories,
   'user_data' => $user_data
 ]);
@@ -50,6 +57,7 @@ echo include_template('layout.php',
   [
     'title' => 'Регистрация',
     'content' => $content,
+    'user' => $user,
     'categories' => $categories
   ]
 );

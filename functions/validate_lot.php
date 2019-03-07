@@ -8,26 +8,26 @@
 function validate_lot($lot_data, $file_data){
   $errors = [];
 
-  if ($error = validate_lot_name($lot_data['name'])) {
+  if ($error = validate_lot_name(get_value($lot_data, 'name'))) {
     $errors['name'] = $error;
   }
 
-  if ($error = validate_lot_description($lot_data['description'])) {
+  if ($error = validate_lot_description(get_value($lot_data, 'description'))) {
     $errors['description'] = $error;
   }
 
-  if ($error = validate_lot_start_price($lot_data['start_price'])) {
+  if ($error = validate_lot_start_price(get_value($lot_data, 'start_price'))) {
     $errors['start_price'] = $error;
   }
 
-  if ($error = validate_lot_step($lot_data['step'])) {
+  if ($error = validate_lot_step(get_value($lot_data, 'step'))) {
     $errors['step'] = $error;
   }
-  if ($error = validate_category_id($lot_data['category_id'])) {
+  if ($error = validate_category_id(get_value($lot_data, 'category_id'))) {
     $errors['category_id'] = $error;
   }
 
-  if ($error = validate_end_time($lot_data['end_time'])) {
+  if ($error = validate_end_time(get_value($lot_data, 'end_time'))) {
     $errors['end_time'] = $error;
   }
   if ($error = validate_file_img($file_data)) {
@@ -111,20 +111,12 @@ function check_date_format($date) {
 }
 
 function validate_file_img($file_data){
-  if (empty($file_data['tmp_name'])){
+  if (empty(get_value($file_data, 'tmp_name'))){
     return 'Вы не выбрали фаил';
   }
-  if (!is_image($file_data['type'])){
+  if (!is_image(get_value($file_data, 'type'))){
     return 'Загрузите jpg, png, gif';
   }
   return null;
 }
 
-function is_image($mime_type){
-  $allow_types = [
-    'image/jpeg',
-    'image/png',
-    'image/gif'
-  ];
-  return (array_search($mime_type, $allow_types) !== false);
-}

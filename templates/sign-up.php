@@ -8,31 +8,29 @@
         <?php endforeach; ?>
       </ul>
     </nav>
-      <form class="form container <?= $errors ? 'form--invalid' : '' ?>" action="sign-up.php" method="post" enctype="multipart/form-data"><!-- form--invalid -->
+      <form class="form container <?= ($errors ? 'form--invalid' : '') ?>" action="sign-up.php" method="post" enctype="multipart/form-data"><!-- form--invalid -->
       <h2>Регистрация нового аккаунта</h2>
-      <div class="form__item <?= $errors['email'] ? 'form__item--invalid' : '' ?>"> <!-- form__item--invalid -->
+      <div class="form__item <?= (get_value($errors,'email') ? 'form__item--invalid' : '') ?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
-        <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= $user_data['email'];?>">
-        <span class="form__error"><?= $errors['email'] ?></span>
+        <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= get_value($user_data, 'email');?>">
+        <span class="form__error"><?= get_value($errors, 'email') ?></span>
       </div>
-      <div class="form__item <?= $errors['password'] ? 'form__item--invalid' : '' ?>">
+      <div class="form__item <?= (get_value($errors,'password') ? 'form__item--invalid' : '') ?>">
         <label for="password">Пароль*</label>
-        <input id="password" type="text" name="password" placeholder="Введите пароль" value="<?= $user_data['password'];?>">
-        <span class="form__error"><?= $errors['password'] ?></span>
+        <input id="password" type="text" name="password" placeholder="Введите пароль" value="<?= get_value($user_data, 'password');?>">
+        <span class="form__error"><?= get_value($errors,'password') ?></span>
       </div>
-      <div class="form__item <?= $errors['name'] ? 'form__item--invalid' : '' ?>">
+      <div class="form__item <?= (get_value($errors, 'name') ? 'form__item--invalid' : '') ?>">
         <label for="name">Имя*</label>
-        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= $user_data['name'];?>">
-        <span class="form__error"><?= $errors['name'] ?></span>
+        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= get_value($user_data,'name');?>">
+        <span class="form__error"><?= get_value($errors, 'name') ?></span>
       </div>
-      <div class="form__item <?= $errors['contacts'] ? 'form__item--invalid' : '' ?>">
+      <div class="form__item <?= (get_value($errors,'contacts') ? 'form__item--invalid' : '') ?>">
         <label for="message">Контактные данные*</label>
-        <textarea id="message" name="contacts" placeholder="Напишите как с вами связаться"><?= $user_data['contacts'];?></textarea>
-        <span class="form__error"><?= $errors['contacts'] ?></span>
+        <textarea id="message" name="contacts" placeholder="Напишите как с вами связаться"><?= get_value($user_data,'contacts');?></textarea>
+        <span class="form__error"><?= get_value($errors,'contacts') ?></span>
       </div>
-
-
-      <div class="form__item form__item--file form__item--last <?= $errors['avatar'] ? 'form__item--invalid' : '' ?>">
+      <div class="form__item form__item--file form__item--last <?= (get_value($errors,'avatar') ? 'form__item--invalid' : '') ?>">
         <label>Аватар</label>
         <div class="preview">
           <button class="preview__remove" type="button">x</button>
@@ -45,12 +43,9 @@
           <label for="photo2">
             <span>+ Добавить</span>
           </label>
-        </div><span class="form__error"><?= $errors['avatar'] ?></span>
+        </div><span class="form__error"><?= get_value($errors,'avatar') ?></span>
       </div>
-
-
-
-      <span class="form__error form__error--bottom"><?= $errors ? 'Пожалуйста, исправьте ошибки в форме.' : '' ?></span>
+      <span class="form__error form__error--bottom"><?= ($errors ? 'Пожалуйста, исправьте ошибки в форме.' : '') ?></span>
       <button type="submit" class="button">Зарегистрироваться</button>
       <a class="text-link" href="#">Уже есть аккаунт</a>
     </form>

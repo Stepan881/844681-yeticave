@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ *
+ * @param $link mysqli Ресурс соединения
+ * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param array $data Данные для вставки на место плейсхолдеров
+ *
+ * @return mysqli_stmt Подготовленное выражение
+ */
 function db_get_prepare_stmt($link, $sql, $data = []) {
   $stmt = mysqli_prepare($link, $sql);
   if ($data) {
@@ -61,13 +71,13 @@ function get_lots($connection) {
 }
 
 function get_lot($connection, $id) {
+  $id = (int)$id;
   $sql = '
     SELECT lots.name AS name, lots.img, categories.name AS category_name, lots.description, lots.end_time
     FROM lots
     JOIN categories
     ON lots.сategory_id = categories.id
-    WHERE lots.id = '.$id.';
-    ';
+    WHERE lots.id = '.$id;
   $result = mysqli_query($connection, $sql);
   $lot = mysqli_fetch_all($result, MYSQLI_ASSOC);
   if (!$lot) {
@@ -76,7 +86,7 @@ function get_lot($connection, $id) {
   return $lot[0];
 }
 
-function add_lot($connection, $lot_data) {
+function add_lot($connection, $lot_data, $user_id) {
   $sql = 'INSERT INTO lots (img, name, сategory_id, description, start_price, step, end_time, owner_id)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
   $stmt = db_get_prepare_stmt($connection, $sql, [
@@ -87,7 +97,7 @@ function add_lot($connection, $lot_data) {
     $lot_data['start_price'],
     $lot_data['step'],
     date ('Y-m-d H:i:s', strtotime($lot_data['end_time'])),
-    $lot_data['owner_id']  = 2
+    $user_id
   ]);
 
   $res = mysqli_stmt_execute($stmt);
@@ -99,8 +109,8 @@ function add_lot($connection, $lot_data) {
   return $lot_id;
 }
 
-function isset_email($mail, $connection) {
-  $email = mysqli_real_escape_string($connection, $mail);
+function isset_email($email, $connection) {
+  $email = mysqli_real_escape_string($connection, $email);
   $sql = "SELECT email FROM users WHERE email = '$email'";
   $res = mysqli_query($connection, $sql);
   return mysqli_num_rows($res);
@@ -125,32 +135,18 @@ function add_user($connection, $user_data) {
   return $res;
 }
 
-function validate_login_email_db($connection, $form) {
-  $email = mysqli_real_escape_string($connection, $form['email']);
+function get_user_by_email($connection, $email) {
+  $email = mysqli_real_escape_string($connection, $email);
   $sql = "SELECT * FROM users WHERE email = '$email'";
   $res = mysqli_query($connection, $sql);
   $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
   return $user;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function get_user_by_id ($connection, $id) {
+  $id = (int)$id;
+  $sql = "SELECT * FROM users WHERE id = $id";
+  $res = mysqli_query($connection, $sql);
+  $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+  return $user;
+}
