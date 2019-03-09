@@ -73,12 +73,21 @@ function get_lots($connection) {
 function get_lot($connection, $id) {
   $id = (int)$id;
   $sql = '
-    SELECT lots.name AS name, lots.img, categories.name AS category_name, lots.description, lots.end_time
+    SELECT lots.name AS name, lots.img, categories.name AS category_name, MAX(bets.amount) AS last_bet_amount, lots.description, lots.end_time, lots.start_price, lots.step, lots.owner_id
     FROM lots
     JOIN categories
     ON lots.сategory_id = categories.id
-    WHERE lots.id = '.$id;
+    LEFT JOIN bets
+    ON bets.lot_id = lots.id
+    WHERE lots.id = '.$id.'
+    GROUP BY bets.lot_id';
   $result = mysqli_query($connection, $sql);
+
+  if (!$result) {
+    echo mysqli_error($connection);
+    die();
+  }
+
   $lot = mysqli_fetch_all($result, MYSQLI_ASSOC);
   if (!$lot) {
     return null;
@@ -149,4 +158,33 @@ function get_user_by_id ($connection, $id) {
   $res = mysqli_query($connection, $sql);
   $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
   return $user;
+}
+
+function get_rates($connection, $lot_id) {
+  $lot_id = (int)$lot_id;
+  $lot = "
+SELECT * 
+FROM bets 
+WHERE lot_id = $lot_id 
+ORDER BY create_time DESC
+LIMIT 10
+";
+  $res = mysqli_query($connection, $lot);
+  return $res;
+}
+function add_bet($connection, $bet_field, $lot, $user) {
+  $sql = 'INSERT INTO bets (amount, owner_id, lot_id)
+          VALUES (?, ?, ?)';
+  $stmt = db_get_prepare_stmt($connection, $sql, [
+    $bet_field,
+    $lot,
+    $user
+  ]);
+
+  $res = mysqli_stmt_execute($stmt);
+
+  if (!$res) {
+    die(mysqli_error($connection));
+  }
+  return $res;
 }

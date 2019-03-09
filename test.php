@@ -4,6 +4,23 @@ require_once('functions/template.php');
 require_once('functions/upload.php');
 require_once('functions/main.php');
 
+$config = require('config.php');
+$connection = db_connect($config['db']);
+
+$lot_id = 1;
+$lot = get_lot($connection, $lot_id);
+
+var_dump($lot);
+
+
+
+
+
+
+
+
+
+
 //
 //$mime_type = '2019-03-01';
 //
@@ -17,18 +34,18 @@ require_once('functions/main.php');
 //
 //$img = '';
 //
-$lot_data = [
-  'name' => 'sdf',
-  'category_id' => 7,
-  'end_time' => '30.02.2019',
-  'description' => 'description',
-  'start_price' => 12,
-  'step' => 4
-];
-
-$test =  get_value($lot_data, 'namfe');
-
-var_dump($test);
+//$lot_data = [
+//  'name' => 'sdf',
+//  'category_id' => 7,
+//  'end_time' => '30.02.2019',
+//  'description' => 'description',
+//  'start_price' => 12,
+//  'step' => 4
+//];
+//
+//$test =  get_value($lot_data, 'namfe');
+//
+//var_dump($test);
 
 //
 //$errors = validate_lot($lot_data, $img);

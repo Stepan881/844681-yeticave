@@ -1,6 +1,6 @@
 <?php
 
-function validate_login($connection, $form, $user){
+function validate_login($form, $user){
   $errors = [];
   if ($error = validate_login_email($form['email'], $user)) {
     $errors['email'] = $error;

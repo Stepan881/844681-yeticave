@@ -22,8 +22,6 @@ if ($user_id = get_value($_SESSION, 'user_id')) {
   $user = get_user_by_id($connection, $user_id);
 }
 
-var_dump($user);
-
 $content = include_template('index.php', [
     'categories' => $categories,
     'lots' => $lots,

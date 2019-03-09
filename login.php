@@ -22,12 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $user_data = $_POST;
 
   $user = get_user_by_email($connection, $user_data['email']);
-  $errors = validate_login($connection, $user_data, $user);
+  $errors = validate_login($user_data, $user);
 
   if (!$errors) {
     $_SESSION['user_id'] = get_value($user, 'id');
     header('Location: index.php');
     exit();
+  } else {
+    $user = null;
   }
 }
 
