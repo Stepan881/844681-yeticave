@@ -17,7 +17,7 @@ function include_template($name, $data)
   return $result;
 }
 
-function format($number)
+function format_price($number)
 {
   $number = ceil($number);
   if ($number >= 1000) {

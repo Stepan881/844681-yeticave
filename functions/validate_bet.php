@@ -1,6 +1,6 @@
 <?php
 
-function validate_bet($bet_field, $lot, $user) {
+function validate_bet($bet_field, $lot) {
   if ($lot['last_bet_amount'] === NULL) {
     $lot['last_bet_amount'] = $lot['start_price'];
   }
@@ -10,9 +10,6 @@ function validate_bet($bet_field, $lot, $user) {
     $errors['bet'] = $error;
   }
   if ($error = validate_bet_size($lot, $bet_field)) {
-    $errors['bet'] = $error;
-  }
-  if ($error = validate_bet_by_user($lot, $user)) {
     $errors['bet'] = $error;
   }
 
@@ -38,10 +35,20 @@ function validate_bet_size($lot, $bet_field) {
   return null;
 }
 
-function validate_bet_by_user($lot, $user) {
-  if($lot['owner_id'] === $user['id']){
-    return 'Нельзя ставить на свои лоты!' ;
+
+function restrictions($user, $lot, $last_bet_user_id) {
+  if (!$user) {
+    return 'Войдите в свой аккаунт!';
   }
+  if($lot['end_time'] < date("Y-m-d H:i:s")){
+    return 'Срок лота истек!';
+  }
+  if($lot['owner_id'] === $user['id']){
+    return 'Нельзя ставить на свои лоты!';
+  }
+  if($user['id'] === $last_bet_user_id){
+    return 'Вы уже сделали ставку!';
+  }
+
   return null;
 }
-

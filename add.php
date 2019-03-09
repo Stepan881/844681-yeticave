@@ -28,6 +28,9 @@ if ($user_id = get_value($_SESSION, 'user_id')) {
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $lot_data = $_POST;
+
+ // var_dump($lot_data);
+
   $file_data = get_value($_FILES,'img');
 
   $errors = validate_lot($lot_data, $file_data);

@@ -160,17 +160,21 @@ function get_user_by_id ($connection, $id) {
   return $user;
 }
 
-function get_rates($connection, $lot_id) {
+function get_bets($connection, $lot_id) {
   $lot_id = (int)$lot_id;
   $lot = "
-SELECT * 
+SELECT bets.create_time, bets.amount, bets.owner_id, bets.lot_id, users.id, users.name as user_name
 FROM bets 
-WHERE lot_id = $lot_id 
-ORDER BY create_time DESC
-LIMIT 10
+JOIN users
+ON bets.owner_id = users.id
+WHERE lot_id = '$lot_id' 
+ORDER BY bets.id DESC
+LIMIT 10 
 ";
   $res = mysqli_query($connection, $lot);
-  return $res;
+
+  $bets = mysqli_fetch_all($res, MYSQLI_ASSOC);
+  return $bets;
 }
 function add_bet($connection, $bet_field, $lot, $user) {
   $sql = 'INSERT INTO bets (amount, owner_id, lot_id)

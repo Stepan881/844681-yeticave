@@ -35,8 +35,7 @@ if (!is_numeric($lot_id)) {
 
 $lot = get_lot($connection, $lot_id);
 $lot['minimum_rate'] = get_lot_minimum_rate($lot);
-
-$minimum_rate = get_lot_minimum_rate($lot);
+$lot['current_price'] = get_current_price($lot);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $bet_field = get_value($_POST, 'bet');
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // запись в базу
   // обновить данные лота
 
-  $errors = validate_bet($bet_field, $lot, $user);
+  $errors = validate_bet($bet_field, $lot);
 
   if (!$errors) {
     add_bet($connection, $bet_field, $user_id, $lot_id);
@@ -55,8 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 
-$rates = get_rates($connection, $lot_id);
-var_dump(count($rates));
+$bets = get_bets($connection, $lot_id);
+
+$last_bet_user_id = get_last_bet_user_id($bets);
+
+$restrictions = restrictions($user, $lot, $last_bet_user_id);
+get_current_price($lot);
+
 $error = [
   'title' => '404 Страница не найдена',
   'description' => 'Данной страницы не существует на сайте.'
@@ -64,11 +68,11 @@ $error = [
 
 if ($lot) {
   $content = include_template('lot.php', [
+    'restrictions' => $restrictions,
     'categories' => $categories,
     'lot' => $lot,
     'lot_id' => $lot_id,
-    'minimum_rate' => $minimum_rate,
-    'rates' => $rates,
+    'bets' => $bets,
     'user' => $user,
     'bet_field' => $bet_field,
     'errors' => $errors
