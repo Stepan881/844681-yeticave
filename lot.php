@@ -40,22 +40,15 @@ $lot['current_price'] = get_current_price($lot);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $bet_field = get_value($_POST, 'bet');
 
-  //TODO:
-  // Валидация поля, значение
-  // запись в базу
-  // обновить данные лота
-
   $errors = validate_bet($bet_field, $lot);
 
   if (!$errors) {
     add_bet($connection, $bet_field, $user_id, $lot_id);
     header("refresh: 0;");
   }
-
 }
 
 $bets = get_bets($connection, $lot_id);
-
 $last_bet_user_id = get_last_bet_user_id($bets);
 
 $restrictions = restrictions($user, $lot, $last_bet_user_id);

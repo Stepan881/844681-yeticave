@@ -27,9 +27,11 @@ if ($user_id = get_value($_SESSION, 'user_id')) {
 
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $lot_data = $_POST;
+  $_POST['name'] = data_xss($_POST['name']);
+  $_POST['description'] = data_xss($_POST['description']);
 
- // var_dump($lot_data);
+
+  $lot_data = $_POST;
 
   $file_data = get_value($_FILES,'img');
 

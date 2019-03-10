@@ -56,7 +56,7 @@
                     <tr class="history__item">
                         <td class="history__name"><?= get_value($bet, 'user_name')?></td>
                         <td class="history__price"><?= get_value($bet, 'amount')?></td>
-                        <td class="history__time"><?= get_value($bet, 'create_time')?></td>
+                        <td class="history__time"><?= format_data(get_value($bet, 'create_time'))?></td>
                     </tr>
                     <?php endforeach; ?>
                 </table>

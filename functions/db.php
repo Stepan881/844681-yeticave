@@ -37,7 +37,6 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
   return $stmt;
 }
 
-
 function db_connect($db_config)
 {
   $connection = mysqli_connect($db_config['host'], $db_config['user'], $db_config['password'], $db_config['database']);
@@ -47,7 +46,6 @@ function db_connect($db_config)
   }
   mysqli_set_charset($connection, "utf8");
   return $connection;
-
 }
 
 function get_categories($connection) {

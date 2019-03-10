@@ -33,3 +33,29 @@ function get_last_bet_user_id($bets){
   }
   return null;
 }
+
+function format_data($data) {
+  $data_unix = strtotime($data);
+  $new_data_unix = date_create();
+  $new_data_unix = date_timestamp_get($new_data_unix);
+  $data_unix = $new_data_unix - $data_unix  ;
+
+  if ($data_unix < 300 ) {
+    return '5 минут назад';
+  }
+  if ($data_unix < 1200 ) {
+    return '20 минут назад';
+  }
+  if ($data_unix < 3600 ) {
+    return 'Час назад';
+  }
+
+  return date_format(new DateTime($data), 'd.m.y') . ' в ' . date_format(new DateTime($data), 'H:m');
+}
+
+function data_xss($key){
+  $key = stripslashes($key);
+  $key = strip_tags($key);
+  $key = htmlspecialchars($key);
+  return $key;
+}

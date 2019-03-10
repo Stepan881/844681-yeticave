@@ -28,9 +28,14 @@ $user = null;
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  $_POST['email'] = data_xss($_POST['email']);
+  $_POST['password'] = data_xss($_POST['password']);
+  $_POST['name'] = data_xss($_POST['name']);
+  $_POST['contacts'] = data_xss($_POST['contacts']);
+
   $user_data = $_POST;
   $file_data = $_FILES['img'];
-
   $errors = validate_user($connection, $user_data, $file_data);
 
   if (!$errors) {
