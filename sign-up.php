@@ -17,7 +17,9 @@ require_once('functions/db.php');
 require_once('functions/template.php');
 require_once('functions/upload.php');
 require_once('functions/validate_user.php');
-
+if (!file_exists('config.php')) {
+  die('Создайте файл config.php на основе config.sample.php');
+}
 $config = require('config.php');
 
 $connection = db_connect($config['db']);

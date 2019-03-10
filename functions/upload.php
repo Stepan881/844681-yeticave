@@ -16,8 +16,9 @@ function parse_extension($filename) {
 
 function upload_img($tmp_path, $filename) {
   $ext = parse_extension($filename);
-  $path = 'img/' . uniqid() . '.' . $ext;
-  move_uploaded_file($tmp_path, $path);
+  $path = 'uploads/' . uniqid() . '.' . $ext;
+  if (!move_uploaded_file($tmp_path, $path)) {
+    die('Не найдена папка uploads или отсутствуют права на запись в неё');
+  }
   return $path;
 }
-
