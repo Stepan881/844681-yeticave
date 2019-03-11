@@ -8,12 +8,12 @@
           <?php endforeach; ?>
         </ul>
     </nav>
-<form class="form form--add-lot container <?= ($errors) ? 'form--invalid' : '' ?>" action="add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+<form class="form form--add-lot container <?= ($errors) ? 'form--invalid' : '' ?>" action="add.php" method="post" enctype="multipart/form-data">
   <h2>Добавление лота</h2>
   <div class="form__container-two">
-    <div class="form__item <?= get_value($errors,'name') ? 'form__item--invalid' : '' ?>"> <!-- form__item--invalid -->
+    <div class="form__item <?= get_value($errors,'name') ? 'form__item--invalid' : '' ?>">
       <label for="lot-name">Наименование</label>
-      <input id="lot-name" type="text" name="name" placeholder="Введите наименование лота" value="<?= get_value($lot_data,'name');?>">
+      <input id="lot-name" type="text" name="name" placeholder="Введите наименование лота" value="<?= data_xss(get_value($lot_data,'name'));?>">
       <span class="form__error"><?= get_value($errors,'name') ?></span>
     </div>
     <div class="form__item <?= get_value($errors,'category_id') ? 'form__item--invalid' : '' ?>">
@@ -30,10 +30,10 @@
   </div>
   <div class="form__item form__item--wide <?= get_value($errors,'description') ? 'form__item--invalid' : '' ?>">
     <label for="message">Описание</label>
-    <textarea id="message" name="description" placeholder="Напишите описание лота"><?= get_value($lot_data,'description');?></textarea>
+    <textarea id="message" name="description" placeholder="Напишите описание лота"><?= data_xss(get_value($lot_data,'description'));?></textarea>
     <span class="form__error"><?= get_value($errors,'description')?></span>
   </div>
-  <div class="form__item form__item--file <?= get_value($errors, 'img') ? 'form__item--invalid' : '' ?>"><!-- form__item--uploaded -->
+  <div class="form__item form__item--file <?= get_value($errors, 'img') ? 'form__item--invalid' : '' ?>">
     <label>Изображение</label>
     <div class="preview">
       <button class="preview__remove" type="button">x</button>

@@ -27,12 +27,8 @@ if ($user_id = get_value($_SESSION, 'user_id')) {
   $user = get_user_by_id($connection, $user_id);
 }
 
-
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $_POST['name'] = data_xss($_POST['name']);
-  $_POST['description'] = data_xss($_POST['description']);
-
 
   $lot_data = $_POST;
 
@@ -41,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $errors = validate_lot($lot_data, $file_data);
 
   if (!$errors) {
-    $lot_data['img'] = (upload_img($file_data['tmp_name'], $file_data['name']));
+    $lot_data['img'] = (upload_img(get_value($file_data, 'tmp_name'), get_value($file_data,'name')));
     $lot_id = add_lot($connection, $lot_data, get_value($user, 'id'));
 
     if ($lot_id) {

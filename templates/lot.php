@@ -9,14 +9,14 @@
     </ul>
 </nav>
 <section class="lot-item container">
-    <h2><?= get_value($lot, 'name'); ?></h2>
+    <h2><?= data_xss(get_value($lot, 'name')); ?></h2>
     <div class="lot-item__content">
         <div class="lot-item__left">
             <div class="lot-item__image">
                 <img src="<?= get_value($lot, 'img'); ?>" width="730" height="548" alt="Сноуборд">
             </div>
             <p class="lot-item__category">Категория: <span><?= get_value($lot, 'category_name'); ?></span></p>
-            <p class="lot-item__description"><?= get_value($lot, 'description'); ?></p>
+            <p class="lot-item__description"><?= data_xss(get_value($lot, 'description')); ?></p>
         </div>
         <div class="lot-item__right">
 
@@ -33,7 +33,7 @@
                         Мин. ставка <span><?= get_value($lot, 'minimum_rate'); ?> р</span>
                     </div>
                 </div>
-              <?php if(!$restrictions): ?>
+                <?php if(!$restrictions): ?>
                 <form class="lot-item__form" action="/lot.php?lot_id=<?= (int)$lot_id; ?>" method="post">
                     <p class="lot-item__form-item form__item <?= ($errors ? 'form__item--invalid' : '') ?>">
                         <label for="cost">Ваша ставка</label>
@@ -48,13 +48,12 @@
                   </div>
               <?php endif; ?>
             </div>
-
             <div class="history">
                 <h3>История ставок (<span><?= count($bets) ?></span>)</h3>
                 <table class="history__list">
                     <?php foreach ($bets as $bet): ?>
                     <tr class="history__item">
-                        <td class="history__name"><?= get_value($bet, 'user_name')?></td>
+                        <td class="history__name"><?= data_xss(get_value($bet, 'user_name'))?></td>
                         <td class="history__price"><?= get_value($bet, 'amount')?></td>
                         <td class="history__time"><?= format_data(get_value($bet, 'create_time'))?></td>
                     </tr>

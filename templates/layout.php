@@ -31,7 +31,7 @@
             <nav class="user-menu">
                 <?php if ($user): ?>
                     <div class="user-menu__logged">
-                        <p><?= get_value($user, 'name'); ?></p>
+                        <p><?= data_xss(get_value($user, 'name')); ?></p>
                         <a href="/logout.php">Выход</a>
                     </div>
                 <?php else: ?>
@@ -54,7 +54,7 @@
         <ul class="nav__list container">
             <?php foreach ($categories as $category):?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?=$category['name'];?></a>
+                    <a href="pages/all-lots.html"><?=get_value($category,'name');?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

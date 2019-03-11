@@ -1,26 +1,38 @@
 <?php
-
+/**
+ * Валидация юзера
+ *
+ * @param mysqli $connection Соединение с базой
+ * @param array $user_data данные юзера с формы
+ * @param string $file_data фотография(аватарка)
+ * @return array описание ошибок
+ */
 function validate_user($connection, $user_data, $file_data){
   $errors = [];
-  if ($error = validate_email($user_data['email'], $connection)) {
+  if ($error = validate_email(get_value($user_data, 'email'), $connection)) {
     $errors['email'] = $error;
   }
-  if ($error = validate_password($user_data['password'])) {
+  if ($error = validate_password(get_value($user_data, 'password'))) {
     $errors['password'] = $error;
   }
-  if ($error = validate_name($user_data['name'])) {
+  if ($error = validate_name(get_value($user_data, 'name'))) {
     $errors['name'] = $error;
   }
-  if ($error = validate_contacts($user_data['contacts'])) {
+  if ($error = validate_contacts(get_value($user_data, 'contacts'))) {
     $errors['contacts'] = $error;
   }
   if ($error = validate_avatar_img($file_data)) {
     $errors['avatar'] = $error;
   }
-
   return $errors;
 }
-
+/**
+ * Валидация емайла
+ *
+ * @param mysqli $connection Соединение с базой
+ * @param string $email email юзера с формы
+ * @return string описание ошибки
+ */
 function validate_email($email, $connection){
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     return 'E-mail адрес указан не верно.';
@@ -30,7 +42,12 @@ function validate_email($email, $connection){
   }
   return null;
 }
-
+/**
+ * Валидация пароля
+ *
+ * @param string $password пароль юзера с формы
+ * @return string описание ошибки
+ */
 function validate_password($password){
   if($password === ''){
     return 'Заполните пароль!';
@@ -38,10 +55,14 @@ function validate_password($password){
   if(mb_strlen($password) > 100 ){
     return 'Пароль не должен превышать 100 символов!';
   }
-
   return null;
 }
-
+/**
+ * Валидация пароля
+ *
+ * @param string $name имя юзера с формы
+ * @return string описание ошибки
+ */
 function validate_name($name){
   if($name === ''){
     return 'Введите Имя!';
@@ -51,7 +72,12 @@ function validate_name($name){
   }
   return null;
 }
-
+/**
+ * Валидация контактных данных
+ *
+ * @param string $contacts Контактные данные с формы
+ * @return string описание ошибки
+ */
 function validate_contacts($contacts){
   if($contacts === ''){
     return 'Введите Контактные данные!';
@@ -61,9 +87,15 @@ function validate_contacts($contacts){
   }
   return null;
 }
+/**
+ * Валидация типа файла, проверяет является фаил jpg, png, gif
+ * не обьязательный выбор файла
+ * @param array $file_data тип файла
+ * @return string описание ошибки
+ */
 function validate_avatar_img($file_data){
-  if (!empty($file_data['tmp_name'])){
-    if (!is_image($file_data['type'])){
+  if (!empty(get_value($file_data, 'tmp_name'))){
+    if (!is_image(get_value($file_data, 'type'))){
       return 'Загрузите jpg, png, gif';
     }
   }

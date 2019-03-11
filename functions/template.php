@@ -16,7 +16,12 @@ function include_template($name, $data)
 
   return $result;
 }
-
+/**
+ * Форматирование цены, отделение тысяч пробелом + знак рубля
+ *
+ * @param integer $number цена
+ * @return string
+ */
 function format_price($number)
 {
   $number = ceil($number);
@@ -25,7 +30,13 @@ function format_price($number)
   }
   return $number . ' &#8381;';
 }
-
+/**
+ * форматирование окончание таймера
+ *
+ * @throws string $data_end время лота
+ * @param string $data_end
+ * @return string
+ */
 function time_to_end($data_end) {
   $now = new DateTime();
   $date = date_create_from_format("Y-m-d H:i:s", $data_end);

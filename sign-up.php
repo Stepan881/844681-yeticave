@@ -31,21 +31,16 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-//  $_POST['email'] = data_xss($_POST['email']);
-//  $_POST['password'] = data_xss($_POST['password']);
-//  $_POST['name'] = data_xss($_POST['name']);
-//  $_POST['contacts'] = data_xss($_POST['contacts']);
-
   $user_data = $_POST;
-  $file_data = $_FILES['img'];
+  $file_data = get_value($_FILES, 'img');
   $errors = validate_user($connection, $user_data, $file_data);
 
   if (!$errors) {
     $user_data['avatar'] = '';
     if ($_FILES['img']['name']) {
-      $user_data['avatar'] = (upload_img($file_data['tmp_name'], $file_data['name']));
+      $user_data['avatar'] = (upload_img(get_value($file_data, 'tmp_name'), get_value($file_data, 'name')));
     }
-    $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
+    $user_data['password'] = password_hash(get_value($user_data, 'password'), PASSWORD_DEFAULT);
     $user_id = add_user($connection, $user_data);
     if ($user_id) {
       header('Location: login.php');
