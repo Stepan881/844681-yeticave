@@ -31,10 +31,10 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  $_POST['email'] = data_xss($_POST['email']);
-  $_POST['password'] = data_xss($_POST['password']);
-  $_POST['name'] = data_xss($_POST['name']);
-  $_POST['contacts'] = data_xss($_POST['contacts']);
+//  $_POST['email'] = data_xss($_POST['email']);
+//  $_POST['password'] = data_xss($_POST['password']);
+//  $_POST['name'] = data_xss($_POST['name']);
+//  $_POST['contacts'] = data_xss($_POST['contacts']);
 
   $user_data = $_POST;
   $file_data = $_FILES['img'];
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if (!$errors) {
     $user_data['avatar'] = '';
-    if (!$_FILES['img']['name']) {
+    if ($_FILES['img']['name']) {
       $user_data['avatar'] = (upload_img($file_data['tmp_name'], $file_data['name']));
     }
     $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
