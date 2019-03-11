@@ -96,7 +96,7 @@ function validate_contacts($contacts){
 function validate_avatar_img($file_data){
   if (!empty(get_value($file_data, 'tmp_name'))){
     if (!is_image(get_value($file_data, 'type'))){
-      return 'Загрузите jpg, png, gif';
+      return 'Загрузите jpg, png, jpeg';
     }
   }
   return null;

@@ -4,7 +4,7 @@
  *
  * @param array $array массив
  * @param string $key ключ
- * @return array
+ * @return string
  */
 function get_value($array, $key) {
   if (!isset($array[$key])) {
@@ -30,16 +30,16 @@ function is_image($mime_type){
  * Функция сложение последний ставки лота + шаг цены лота
  *
  * @param array $lot данные лота
- * @return array
+ * @return integer
  */
 function get_lot_minimum_rate($lot) {
-  return get_current_price($lot) + get_value($lot, 'step');
+  return (int)get_current_price($lot) + (int)get_value($lot, 'step');
 }
 /**
  * Получение последней ставки на лоте
  *
  * @param array $lot данные лота
- * @return array
+ * @return integer
  */
 function get_current_price($lot) {
   if ($bet_amount = get_value($lot, 'last_bet_amount')) {

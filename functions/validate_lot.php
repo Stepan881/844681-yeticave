@@ -133,7 +133,7 @@ function check_date_format($date) {
 /**
  * Валидация типа файла, проверяет является фаил jpg, png, gif
  * обьязательный выбор файла
- * @param string $file_data тип файла
+ * @param array $file_data тип файла
  * @return string описание ошибки
  */
 function validate_file_img($file_data){
@@ -141,7 +141,7 @@ function validate_file_img($file_data){
     return 'Вы не выбрали фаил';
   }
   if (!is_image(get_value($file_data, 'type'))){
-    return 'Загрузите jpg, png, gif';
+    return 'Загрузите jpg, png, jpeg';
   }
   return null;
 }
