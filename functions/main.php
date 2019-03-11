@@ -16,13 +16,12 @@ function get_value($array, $key) {
  * Валидация типа файла
  *
  * @param string $mime_type получение файла с формы
- * @return string
+ * @return bool
  */
 function is_image($mime_type){
   $allow_types = [
     'image/jpeg',
-    'image/png',
-    'image/gif'
+    'image/png'
   ];
   return (array_search($mime_type, $allow_types) !== false);
 }

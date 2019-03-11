@@ -14,7 +14,11 @@ function upload_img($tmp_path, $filename) {
   }
   return $path;
 }
-
+/**
+ * функция парсит разширение у файла
+ * @param $filename string имя файла
+ * @return string
+ */
 function parse_extension($filename) {
   $info = new SplFileInfo($filename);
   return $info->getExtension();

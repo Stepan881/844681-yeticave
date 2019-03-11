@@ -237,7 +237,7 @@ function get_bets($connection, $lot_id) {
  * @param integer $bet_field цена ставки
  * @param integer $lot id лота
  * @param integer $user id юзера
- * @return bool
+ * @return integer
  */
 function add_bet($connection, $bet_field, $lot, $user) {
   $sql = 'INSERT INTO bets (amount, owner_id, lot_id)

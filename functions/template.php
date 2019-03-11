@@ -1,4 +1,11 @@
 <?php
+/**
+ * Функция шаблонизатор
+ *
+ * @param $name string имя файла шаблона
+ * @param $data array ассоциативный массив с данными для этого шаблона.
+ * @return string итоговый HTML-код с подставленными данными.
+ */
 function include_template($name, $data)
 {
   $name = 'templates/' . $name;
