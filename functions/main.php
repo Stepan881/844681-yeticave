@@ -51,7 +51,7 @@ function get_current_price($lot) {
  * Получение последней ставки
  *
  * @param array $bets данные ставки
- * @return array
+ * @return integer
  */
 function get_last_bet_user_id($bets){
   if (isset($bets[0]['owner_id'])){

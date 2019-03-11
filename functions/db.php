@@ -39,7 +39,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  * функция конектится с базой
  *
  * @param array $db_config данные от базы
- * @return string
+ * @return mysqli object
  */
 function db_connect($db_config)
 {
@@ -69,7 +69,7 @@ function get_categories($connection) {
  * @return array
  */
 function get_lots($connection) {
-  $sql = '
+$sql = '
         SELECT lots.name, lots.start_price, lots.img, lots.id, lots.end_time, categories.name AS category_name
         FROM lots
         JOIN categories
@@ -146,7 +146,7 @@ function add_lot($connection, $lot_data, $user_id) {
  *
  * @param mysqli $connection конектится с базой
  * @param string $email данные лота
- * @return string
+ * @return integer
  */
 function isset_email($email, $connection) {
   $email = mysqli_real_escape_string($connection, $email);
@@ -217,13 +217,13 @@ function get_user_by_id ($connection, $id) {
 function get_bets($connection, $lot_id) {
   $lot_id = (int)$lot_id;
   $lot = "
-SELECT bets.create_time, bets.amount, bets.owner_id, bets.lot_id, users.id, users.name as user_name
-FROM bets 
-JOIN users
-ON bets.owner_id = users.id
-WHERE lot_id = '$lot_id' 
-ORDER BY bets.id DESC
-LIMIT 10 
+    SELECT bets.create_time, bets.amount, bets.owner_id, bets.lot_id, users.id, users.name as user_name
+    FROM bets 
+    JOIN users
+    ON bets.owner_id = users.id 
+    WHERE lot_id = '$lot_id' 
+    ORDER BY bets.id DESC
+    LIMIT 10
 ";
   $res = mysqli_query($connection, $lot);
 
@@ -253,5 +253,6 @@ function add_bet($connection, $bet_field, $lot, $user) {
   if (!$res) {
     die(mysqli_error($connection));
   }
+  $res = mysqli_insert_id($connection);
   return $res;
 }

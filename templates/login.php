@@ -17,7 +17,7 @@
   </div>
   <div class="form__item form__item--last <?= get_value($errors,'password') ? 'form__item--invalid' : '' ?>">
     <label for="password">Пароль*</label>
-    <input id="password" type="text" name="password" placeholder="Введите пароль" value="<?= data_xss(get_value($user_data, 'password'));?>">
+    <input id="password" type="password" name="password" placeholder="Введите пароль" value="<?= data_xss(get_value($user_data, 'password'));?>">
     <span class="form__error"><?= get_value($errors,'password') ?></span>
   </div>
   <button type="submit" class="button">Войти</button>
