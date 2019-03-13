@@ -1,10 +1,10 @@
 <?php
 /**
- * Валидация юзера
+ * Валидация юзера при регистрации
  *
  * @param mysqli $connection Соединение с базой
  * @param array $user_data данные юзера с формы
- * @param string $file_data фотография(аватарка)
+ * @param array $file_data фотография(аватарка)
  * @return array описание ошибок
  */
 function validate_user($connection, $user_data, $file_data){

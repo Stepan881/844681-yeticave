@@ -1,22 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-
-date_default_timezone_set('Europe/Moscow');
-require_once('functions/db.php');
-require_once('functions/template.php');
-require_once('functions/main.php');
+require_once('init.php');
 require_once('functions/validate_bet.php');
-if (!file_exists('config.php')) {
-  die('Создайте файл config.php на основе config.sample.php');
-}
-$config = require('config.php');
-$user_name = '';
 
-$connection = db_connect($config['db']);
+$user_name = '';
 $user = null;
 $errors = [];
 $bet_field = null;
@@ -32,6 +18,7 @@ if (!get_value($_GET, 'lot_id')) {
 }
 
 $lot_id = get_value($_GET,'lot_id');
+$lot = get_lot($connection, $lot_id);
 if (!is_numeric($lot_id)) {
   die('Параметр id лота не является числом');
 }
@@ -51,18 +38,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-$bets = get_bets($connection, $lot_id);
-$last_bet_user_id = get_last_bet_user_id($bets);
-
-$restrictions = restrictions($user, $lot, $last_bet_user_id);
-get_current_price($lot);
-
 $error = [
   'title' => '404 Страница не найдена',
   'description' => 'Данной страницы не существует на сайте.'
 ];
 
 if ($lot) {
+
+  $bets = get_bets($connection, $lot_id);
+  $last_bet_user_id = get_last_bet_user_id($bets);
+
+  $restrictions = restrictions($user, $lot, $last_bet_user_id);
+  get_current_price($lot);
+
   $content = include_template('lot.php', [
     'restrictions' => $restrictions,
     'categories' => $categories,

@@ -29,7 +29,7 @@ function is_image($mime_type){
  * Функция сложение последний ставки лота + шаг цены лота
  *
  * @param array $lot данные лота
- * @return integer
+ * @return int
  */
 function get_lot_minimum_rate($lot) {
   return (int)get_current_price($lot) + (int)get_value($lot, 'step');
@@ -38,7 +38,7 @@ function get_lot_minimum_rate($lot) {
  * Получение последней ставки на лоте
  *
  * @param array $lot данные лота
- * @return integer
+ * @return string
  */
 function get_current_price($lot) {
   if ($bet_amount = get_value($lot, 'last_bet_amount')) {
@@ -50,7 +50,7 @@ function get_current_price($lot) {
  * Получение последней ставки
  *
  * @param array $bets данные ставки
- * @return integer
+ * @return string
  */
 function get_last_bet_user_id($bets){
   if (isset($bets[0]['owner_id'])){
@@ -80,7 +80,6 @@ function format_data($data) {
   if ($data_unix < 3600 ) {
     return 'Час назад';
   }
-
   return date_format(new DateTime($data), 'd.m.y') . ' в ' . date_format(new DateTime($data), 'H:m');
 }
 /**

@@ -13,7 +13,6 @@ function validate_login($form, $user){
   if ($error = validate_login_password(get_value($form, 'password'), $user)) {
     $errors['password'] = $error;
   }
-
   return $errors;
 }
 /**

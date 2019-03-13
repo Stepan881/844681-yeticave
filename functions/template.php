@@ -26,11 +26,10 @@ function include_template($name, $data)
 /**
  * Форматирование цены, отделение тысяч пробелом + знак рубля
  *
- * @param integer $number цена
+ * @param string $number цена
  * @return string
  */
-function format_price($number)
-{
+function format_price($number){
   $number = ceil($number);
   if ($number >= 1000) {
     return number_format($number, 0, null, ' ') . ' &#8381;';

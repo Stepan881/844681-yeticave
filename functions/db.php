@@ -115,11 +115,12 @@ function get_lot($connection, $id) {
  * функция добавляет новый лот в базу
  *
  * @param mysqli $connection конектится с базой
- * @param integer $lot_data данные лота
- * @param integer $user_id данные пользователя
- * @return integer - id нового лота
+ * @param array $lot_data данные лота
+ * @param string $user_id данные пользователя
+ * @return int Returns number of rows in the result set.
  */
 function add_lot($connection, $lot_data, $user_id) {
+
   $sql = 'INSERT INTO lots (img, name, сategory_id, description, start_price, step, end_time, owner_id)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
   $stmt = db_get_prepare_stmt($connection, $sql, [
@@ -142,11 +143,11 @@ function add_lot($connection, $lot_data, $user_id) {
   return $lot_id;
 }
 /**
- * функция проверяет существования email в базе
+ * функция проверяет существования email в базе (при регистрации)
  *
  * @param mysqli $connection конектится с базой
  * @param string $email данные лота
- * @return integer
+ * @return int Returns number of rows in the result set.
  */
 function isset_email($email, $connection) {
   $email = mysqli_real_escape_string($connection, $email);
@@ -159,9 +160,10 @@ function isset_email($email, $connection) {
  *
  * @param mysqli $connection конектится с базой
  * @param array $user_data данные пользователя
- * @return string
+ * @return bool
  */
 function add_user($connection, $user_data) {
+
   $sql = 'INSERT INTO users (email, password, name, contacts, avatar)
           VALUES (?, ?, ?, ?, ?)';
   $stmt = db_get_prepare_stmt($connection, $sql, [
@@ -187,6 +189,7 @@ function add_user($connection, $user_data) {
  * @return array
  */
 function get_user_by_email($connection, $email) {
+
   $email = mysqli_real_escape_string($connection, $email);
   $sql = "SELECT * FROM users WHERE email = '$email'";
   $res = mysqli_query($connection, $sql);
@@ -211,8 +214,8 @@ function get_user_by_id ($connection, $id) {
  * функция поиск ствок
  *
  * @param mysqli $connection конектится с базой
- * @param integer $lot_id  id ставки
- * @return array
+ * @param string $lot_id  id лота
+ * @return array ставок
  */
 function get_bets($connection, $lot_id) {
   $lot_id = (int)$lot_id;
@@ -234,10 +237,10 @@ function get_bets($connection, $lot_id) {
  * функция добавления ствок
  *
  * @param mysqli $connection конектится с базой
- * @param integer $bet_field цена ставки
- * @param integer $lot id лота
- * @param integer $user id юзера
- * @return integer
+ * @param string $bet_field цена ставки
+ * @param string $lot id лота
+ * @param string $user id юзера
+ * @return int Returns number of rows in the result set.
  */
 function add_bet($connection, $bet_field, $lot, $user) {
   $sql = 'INSERT INTO bets (amount, owner_id, lot_id)
@@ -256,3 +259,52 @@ function add_bet($connection, $bet_field, $lot, $user) {
   $res = mysqli_insert_id($connection);
   return $res;
 }
+/**
+ * функция проверяет существования id category
+ *
+ * @param string $category_id  id Категории
+ * @param mysqli $connection конектится с базой
+ * @return int
+ */
+function isset_categories($category_id, $connection) {
+  $category_id = mysqli_real_escape_string($connection, $category_id);
+  $sql = "SELECT * FROM categories WHERE id = '$category_id'";
+  $res = mysqli_query($connection, $sql);
+  return mysqli_num_rows($res);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

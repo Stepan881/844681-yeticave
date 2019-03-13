@@ -3,9 +3,10 @@
  * функция валидации данных формы добавления лота
  * @param array $lot_data данные полученные из формы
  * @param array $file_data данные полученные из формы (Фото)
+ * @param mysqli $connection Соединение с базой
  * @return array массив ошибок
  */
-function validate_lot($lot_data, $file_data){
+function validate_lot($lot_data, $file_data, $connection){
   $errors = [];
   if ($error = validate_lot_name(get_value($lot_data, 'name'))) {
     $errors['name'] = $error;
@@ -19,7 +20,7 @@ function validate_lot($lot_data, $file_data){
   if ($error = validate_lot_step(get_value($lot_data, 'step'))) {
     $errors['step'] = $error;
   }
-  if ($error = validate_category_id(get_value($lot_data, 'category_id'))) {
+  if ($error = validate_category_id(get_value($lot_data, 'category_id'), $connection)) {
     $errors['category_id'] = $error;
   }
   if ($error = validate_end_time(get_value($lot_data, 'end_time'))) {
@@ -63,7 +64,7 @@ function validate_lot_description($description){
 /**
  * Валидация Стартовой цены
  *
- * @param integer $start_price Стартовая цена
+ * @param string $start_price Стартовая цена
  * @return string описание ошибки
  */
 function validate_lot_start_price($start_price){
@@ -78,7 +79,7 @@ function validate_lot_start_price($start_price){
 /**
  * Валидация Шага ставки
  *
- * @param integer $lot_step Шаг ставки
+ * @param string $lot_step Шаг ставки
  * @return string описание ошибки
  */
 function validate_lot_step($lot_step){
@@ -93,11 +94,12 @@ function validate_lot_step($lot_step){
 /**
  * Валидация категории
  *
- * @param integer $category_id Категория
+ * @param string $category_id Категория
+ * @param mysqli $connection Соединение с базой
  * @return string описание ошибки
  */
-function validate_category_id($category_id){
-  if($category_id == 0){
+function validate_category_id($category_id, $connection){
+  if(!isset_categories($category_id, $connection)) {
     return 'Выберите категорию!';
   }
   return null;

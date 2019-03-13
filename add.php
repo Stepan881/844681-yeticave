@@ -1,24 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-
-date_default_timezone_set('Europe/Moscow');
-require_once('functions/main.php');
-require_once('functions/db.php');
-require_once('functions/template.php');
-require_once('functions/upload.php');
+require_once('init.php');
 require_once('functions/validate_lot.php');
-
-if (!file_exists('config.php')) {
-  die('Создайте файл config.php на основе config.sample.php');
-}
-$config = require('config.php');
-
-$connection = db_connect($config['db']);
-
+require_once('functions/upload.php');
 $categories = get_categories($connection);
 $lot_data = [];
 $user = null;
@@ -34,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $file_data = get_value($_FILES,'img');
 
-  $errors = validate_lot($lot_data, $file_data);
+  $errors = validate_lot($lot_data, $file_data, $connection);
 
   if (!$errors) {
     $lot_data['img'] = (upload_img(get_value($file_data, 'tmp_name'), get_value($file_data,'name')));

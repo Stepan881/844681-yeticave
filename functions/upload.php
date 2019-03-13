@@ -2,8 +2,8 @@
 
 /**
  * Загрузка файла на сервер
- * @param $tmp_path string временный путь до файла
- * @param $filename string реальное имя файла {для извлечения расширения}
+ * @param string $tmp_path временный путь до файла
+ * @param string $filename реальное имя файла {для извлечения расширения}
  * @return string путь до загруженного файла
  */
 function upload_img($tmp_path, $filename) {
@@ -16,7 +16,7 @@ function upload_img($tmp_path, $filename) {
 }
 /**
  * функция парсит разширение у файла
- * @param $filename string имя файла
+ * @param string $filename имя файла
  * @return string
  */
 function parse_extension($filename) {
