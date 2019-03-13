@@ -117,7 +117,7 @@ function get_lot($connection, $id) {
  * @param mysqli $connection конектится с базой
  * @param array $lot_data данные лота
  * @param string $user_id данные пользователя
- * @return int Returns number of rows in the result set.
+ * @return int идентификатор пользователя
  */
 function add_lot($connection, $lot_data, $user_id) {
 
@@ -163,7 +163,6 @@ function isset_email($email, $connection) {
  * @return bool
  */
 function add_user($connection, $user_data) {
-
   $sql = 'INSERT INTO users (email, password, name, contacts, avatar)
           VALUES (?, ?, ?, ?, ?)';
   $stmt = db_get_prepare_stmt($connection, $sql, [
@@ -189,7 +188,6 @@ function add_user($connection, $user_data) {
  * @return array
  */
 function get_user_by_email($connection, $email) {
-
   $email = mysqli_real_escape_string($connection, $email);
   $sql = "SELECT * FROM users WHERE email = '$email'";
   $res = mysqli_query($connection, $sql);
@@ -214,7 +212,7 @@ function get_user_by_id ($connection, $id) {
  * функция поиск ствок
  *
  * @param mysqli $connection конектится с базой
- * @param string $lot_id  id лота
+ * @param integer $lot_id  id лота
  * @return array ставок
  */
 function get_bets($connection, $lot_id) {
@@ -237,10 +235,10 @@ function get_bets($connection, $lot_id) {
  * функция добавления ствок
  *
  * @param mysqli $connection конектится с базой
- * @param string $bet_field цена ставки
- * @param string $lot id лота
- * @param string $user id юзера
- * @return int Returns number of rows in the result set.
+ * @param integer $bet_field цена ставки
+ * @param integer $lot id лота
+ * @param integer $user id юзера
+ * @return integer id ставки
  */
 function add_bet($connection, $bet_field, $lot, $user) {
   $sql = 'INSERT INTO bets (amount, owner_id, lot_id)
@@ -262,7 +260,7 @@ function add_bet($connection, $bet_field, $lot, $user) {
 /**
  * функция проверяет существования id category
  *
- * @param string $category_id  id Категории
+ * @param integer $category_id  id Категории
  * @param mysqli $connection конектится с базой
  * @return int
  */
