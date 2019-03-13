@@ -7,6 +7,7 @@ $user = null;
 $errors = [];
 $bet_field = null;
 $minimum_rate = '';
+$lot['name'] = '';
 $categories = get_categories($connection);
 
 if ($user_id = get_value($_SESSION, 'user_id')) {
@@ -18,7 +19,7 @@ if (!get_value($_GET, 'lot_id')) {
 }
 
 $lot_id = get_value($_GET,'lot_id');
-$lot = get_lot($connection, $lot_id);
+
 if (!is_numeric($lot_id)) {
   die('Параметр id лота не является числом');
 }
@@ -43,7 +44,7 @@ $error = [
   'description' => 'Данной страницы не существует на сайте.'
 ];
 
-if ($lot) {
+if (isset($lot['name'])) {
 
   $bets = get_bets($connection, $lot_id);
   $last_bet_user_id = get_last_bet_user_id($bets);
@@ -61,7 +62,9 @@ if ($lot) {
     'bet_field' => $bet_field,
     'errors' => $errors
   ]);
+
 } else {
+  $lot['name'] = '404 Страница не найдена';
   $content = include_template('error.php', [
     'categories' => $categories,
     'lot' => $lot,
@@ -79,4 +82,3 @@ echo include_template('layout.php',
     'categories' => $categories
   ]
 );
-
