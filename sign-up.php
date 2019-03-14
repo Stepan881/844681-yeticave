@@ -1,29 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sss
- * Date: 04.03.2019
- * Time: 10:11
- */
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-
-date_default_timezone_set('Europe/Moscow');
-require_once('functions/main.php');
-require_once('functions/db.php');
-require_once('functions/template.php');
+require_once('init.php');
 require_once('functions/upload.php');
 require_once('functions/validate_user.php');
-if (!file_exists('config.php')) {
-  die('Создайте файл config.php на основе config.sample.php');
+if (get_value($_SESSION, 'user_id')) {
+  header('Location: index.php');
 }
-$config = require('config.php');
-
-$connection = db_connect($config['db']);
-
 $categories = get_categories($connection);
 $user_data = [];
 $user = null;

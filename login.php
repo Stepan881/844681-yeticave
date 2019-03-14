@@ -1,7 +1,9 @@
 <?php
 require_once('init.php');
 require_once('functions/validate_login.php');
-
+if (get_value($_SESSION, 'user_id')) {
+  header('Location: index.php');
+}
 $categories = get_categories($connection);
 $errors = [];
 $user = null;
