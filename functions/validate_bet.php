@@ -22,7 +22,7 @@ function validate_bet($bet_field, $lot) {
 /**
  * функция валидации суммы ставки
  * @param string $bet_field Ставка полученная из формы
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_bet_field($bet_field) {
   if($bet_field === ''){
@@ -37,7 +37,7 @@ function validate_bet_field($bet_field) {
  * функция валидации суммы ставки
  * @param array $lot последняя ставка полученная из базы
  * @param string $bet_field Ставка полученная из формы
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_bet_size($lot, $bet_field) {
   $bet = (int)get_value($lot, 'last_bet_amount') + (int)get_value($lot, 'step');
@@ -51,7 +51,7 @@ function validate_bet_size($lot, $bet_field) {
  * @param array $user Ставка полученная из формы
  * @param array $lot ставки пользователя
  * @param string $last_bet_user_id ставка пользователя
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function restrictions($user, $lot, $last_bet_user_id) {
   if (!$user) {

@@ -25,17 +25,22 @@ if (!is_numeric($lot_id)) {
 }
 
 $lot = get_lot($connection, $lot_id);
-$lot['minimum_rate'] = get_lot_minimum_rate($lot);
-$lot['current_price'] = get_current_price($lot);
+if ($lot) {
+  $lot['minimum_rate'] = get_lot_minimum_rate($lot);
+  $lot['current_price'] = get_current_price($lot);
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' and $lot) {
+
   $bet_field = get_value($_POST, 'bet');
 
   $errors = validate_bet($bet_field, $lot);
 
   if (!$errors) {
     add_bet($connection, $bet_field, $user_id, $lot_id);
-    header("refresh: 0;");
+    $lot = get_lot($connection, $lot_id);
+    $lot['minimum_rate'] = get_lot_minimum_rate($lot);
+    $lot['current_price'] = get_current_price($lot);
   }
 }
 
@@ -44,7 +49,7 @@ $error = [
   'description' => 'Данной страницы не существует на сайте.'
 ];
 
-if (isset($lot['name'])) {
+if ($lot['id']) {
 
   $bets = get_bets($connection, $lot_id);
   $last_bet_user_id = get_last_bet_user_id($bets);

@@ -35,7 +35,7 @@ function validate_lot($lot_data, $file_data, $connection){
  * Валидация названия лота
  *
  * @param string $name названия лота
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_lot_name($name){
   if($name === ''){
@@ -50,7 +50,7 @@ function validate_lot_name($name){
  * Валидация описание
  *
  * @param string $description описание лота
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_lot_description($description){
   if($description === '') {
@@ -65,7 +65,7 @@ function validate_lot_description($description){
  * Валидация Стартовой цены
  *
  * @param string $start_price Стартовая цена
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_lot_start_price($start_price){
   if($start_price === ''){
@@ -80,7 +80,7 @@ function validate_lot_start_price($start_price){
  * Валидация Шага ставки
  *
  * @param string $lot_step Шаг ставки
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_lot_step($lot_step){
   if($lot_step === ''){
@@ -96,10 +96,10 @@ function validate_lot_step($lot_step){
  *
  * @param string $category_id Категория
  * @param mysqli $connection Соединение с базой
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_category_id($category_id, $connection){
-  if(!isset_categories($category_id, $connection)) {
+  if(!isset_category($category_id, $connection)) {
     return 'Выберите категорию!';
   }
   return null;
@@ -108,7 +108,7 @@ function validate_category_id($category_id, $connection){
  * Валидация Дата окончпния аукциона
  *
  * @param string $end_time Дата окончпния аукциона
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_end_time($end_time){
   if (!check_date_format($end_time)){
@@ -133,10 +133,10 @@ function check_date_format($date) {
   return $result;
 }
 /**
- * Валидация типа файла, проверяет является фаил jpg, png, gif
+ * Валидация типа файла, проверяет является фаил jpg, png
  * обьязательный выбор файла
  * @param array $file_data тип файла
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_file_img($file_data){
   if (empty(get_value($file_data, 'tmp_name'))){

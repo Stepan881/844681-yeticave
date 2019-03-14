@@ -90,7 +90,7 @@ $sql = '
 function get_lot($connection, $id) {
   $id = (int)$id;
   $sql = '
-    SELECT lots.name AS name, lots.img, categories.name AS category_name, MAX(bets.amount) AS last_bet_amount, lots.description, lots.end_time, lots.start_price, lots.step, lots.owner_id
+    SELECT lots.id, lots.name AS name, lots.img, categories.name AS category_name, MAX(bets.amount) AS last_bet_amount, lots.description, lots.end_time, lots.start_price, lots.step, lots.owner_id
     FROM lots
     JOIN categories
     ON lots.сategory_id = categories.id
@@ -147,13 +147,13 @@ function add_lot($connection, $lot_data, $user_id) {
  *
  * @param mysqli $connection конектится с базой
  * @param string $email данные лота
- * @return int Returns number of rows in the result set.
+ * @return bool
  */
 function isset_email($email, $connection) {
   $email = mysqli_real_escape_string($connection, $email);
   $sql = "SELECT email FROM users WHERE email = '$email'";
   $res = mysqli_query($connection, $sql);
-  return mysqli_num_rows($res);
+  return (bool)mysqli_num_rows($res);
 }
 /**
  * функция регистрации пользователя
@@ -264,7 +264,7 @@ function add_bet($connection, $bet_field, $lot, $user) {
  * @param mysqli $connection конектится с базой
  * @return int
  */
-function isset_categories($category_id, $connection) {
+function isset_category($category_id, $connection) {
   $category_id = mysqli_real_escape_string($connection, $category_id);
   $sql = "SELECT * FROM categories WHERE id = '$category_id'";
   $res = mysqli_query($connection, $sql);

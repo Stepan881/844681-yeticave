@@ -26,7 +26,7 @@ function include_template($name, $data)
 /**
  * Форматирование цены, отделение тысяч пробелом + знак рубля
  *
- * @param string $number цена
+ * @param int $number цена
  * @return string
  */
 function format_price($number){
@@ -38,10 +38,9 @@ function format_price($number){
 }
 /**
  * форматирование окончание таймера
- *
- * @throws string $data_end время лота
  * @param string $data_end
  * @return string
+ * @throws string $data_end время лота
  */
 function time_to_end($data_end) {
   $now = new DateTime();

@@ -31,7 +31,7 @@ function validate_user($connection, $user_data, $file_data){
  *
  * @param mysqli $connection Соединение с базой
  * @param string $email email юзера с формы
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_email($email, $connection){
   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -46,7 +46,7 @@ function validate_email($email, $connection){
  * Валидация пароля
  *
  * @param string $password пароль юзера с формы
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_password($password){
   if($password === ''){
@@ -61,7 +61,7 @@ function validate_password($password){
  * Валидация пароля
  *
  * @param string $name имя юзера с формы
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_name($name){
   if($name === ''){
@@ -76,7 +76,7 @@ function validate_name($name){
  * Валидация контактных данных
  *
  * @param string $contacts Контактные данные с формы
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_contacts($contacts){
   if($contacts === ''){

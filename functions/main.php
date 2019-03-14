@@ -4,7 +4,7 @@
  *
  * @param array $array массив
  * @param string $key ключ
- * @return string
+ * @return mixed
  */
 function get_value($array, $key) {
   if (!isset($array[$key])) {
@@ -38,7 +38,7 @@ function get_lot_minimum_rate($lot) {
  * Получение последней ставки на лоте
  *
  * @param array $lot данные лота
- * @return string
+ * @return int
  */
 function get_current_price($lot) {
   if ($bet_amount = get_value($lot, 'last_bet_amount')) {
@@ -50,7 +50,7 @@ function get_current_price($lot) {
  * Получение последней ставки
  *
  * @param array $bets данные ставки
- * @return string
+ * @return int|null
  */
 function get_last_bet_user_id($bets){
   if (isset($bets[0]['owner_id'])){

@@ -19,7 +19,7 @@ function validate_login($form, $user){
  * функция валидации емфил
  * @param string $email данные полученные из формы
  * @param array $user данные пользователя из бд
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_login_email($email, $user){
   if($email === ''){
@@ -37,7 +37,7 @@ function validate_login_email($email, $user){
  * функция валидации емфил
  * @param string $password данные полученные из формы
  * @param array $user данные пользователя из бд
- * @return string описание ошибки
+ * @return string|null описание ошибки
  */
 function validate_login_password($password, $user){
   if($password === ''){
